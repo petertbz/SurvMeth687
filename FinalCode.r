@@ -188,6 +188,8 @@ modificationIndices(fit1, sort = TRUE, minimum.value = 3)
 fit1_urban = sem(model1, data = CGSS, group = "urban")
 summary(fit1_urban)
 
+# however, other MGA cannot run
+
 #####################
 # recode working hours
 CGSS = CGSS %>% 
