@@ -177,7 +177,7 @@ model1 = '
 
     # structural model
     
-    insecurity ~ mental
+    mental ~ insecurity
     '
 fit1 = sem(model1, data = CGSS)
 summary(fit1)
@@ -189,6 +189,8 @@ fit1_urban = sem(model1, data = CGSS, group = "urban")
 summary(fit1_urban)
 
 # however, other MGA cannot run
+fit1_sex = sem(model1, data = CGSS, group = "sex")
+summary(fit1_sex)
 
 #####################
 # recode working hours
@@ -215,10 +217,15 @@ model2 = '
 
     # structural model
     
-    insecurity ~ mental
+    mental ~ insecurity
     '
 fit2 = sem(model2, data = CGSS)
 summary(fit2)
 
 # modification indices for model 2
 modificationIndices(fit2, sort = TRUE, minimum.value = 3)
+
+fit2_urban = sem(model2, data = CGSS, group = "urban")
+summary(fit2_urban)
+
+fit2_sex = sem(model2, data = CGSS, group = "sex")
