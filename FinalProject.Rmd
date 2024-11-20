@@ -1,0 +1,36 @@
+---
+title: "Title"
+author: "Team Kish"
+header-includes:
+    - \usepackage{setspace}
+    - \usepackage{longtable}
+    - \usepackage{booktabs}
+output: 
+  pdf_document:
+    latex_engine: xelatex
+linestretch: 1
+geometry: margin = 1in
+fontsize: 11pt
+mainfont: Times New Roman
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE,
+                      eval = TRUE)
+```
+
+```{r packages and data, include=FALSE}
+library(tidyverse)
+```
+
+# Introduction
+
+# Data and Methods
+
+# Results
+
+# Discussion
+
+# References
