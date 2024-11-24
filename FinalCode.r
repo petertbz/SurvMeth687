@@ -88,6 +88,10 @@ CGSS %>%
          x = "Working Hours per Week",
          y = "Frequency")
 
+# remove the observation that has workhours 168
+table(CGSS$workhours)
+CGSS <- CGSS[CGSS$workhours != 168, ]
+
 # workcontract
 CGSS %>% 
     ggplot(aes(x = workcontract)) +
