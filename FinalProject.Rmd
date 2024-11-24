@@ -13,7 +13,7 @@ geometry: margin = 1in
 fontsize: 11pt
 mainfont: Times New Roman
 bibliography: references.bib
-csl: apa.csl
+csl: asa.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -27,7 +27,7 @@ library(tidyverse)
 
 # Introduction
 
-With rising global competition, industrial shifts, and economic recessions, an increasing number of employees face concerns about layoffs. The instability and unpredictability of labor markets impose significant psychological burdens on workers, often resulting in adverse health outcomes linked to job insecurity. Understanding the relationship between job insecurity and health is crucial for informing interventions aimed at improving workers' well-being. Previous research has established a connection between perceived job insecurity and poor health outcomes. After accounting for demographic, socioeconomic, and job characteristics, as well as prior health conditions, perceived job insecurity was found associated with deteriorating health among U.S. workers (Burgard et al., 2009). Similarly, McDonough (2000), using a national sample of Canadian adults, reported that high levels of job insecurity lead to lower self-rated health, increased psychological distress, and increased use of medication for symptom relief.
+With rising global competition, industrial shifts, and economic recessions, an increasing number of employees face concerns about layoffs. The instability and unpredictability of labor markets impose significant psychological burdens on workers, often resulting in adverse health outcomes linked to job insecurity. Understanding the relationship between job insecurity and health is crucial for informing interventions aimed at improving workers' well-being. Previous research has established a connection between perceived job insecurity and poor health outcomes. After accounting for demographic, socioeconomic, and job characteristics, as well as prior health conditions, perceived job insecurity was found associated with deteriorating health among U.S. workers [@burgard_perceived_2009]. Similarly, McDonough [-@mcdonough_job_2000], using a national sample of Canadian adults, reported that high levels of job insecurity lead to lower self-rated health, increased psychological distress, and increased use of medication for symptom relief.
 
 This study investigates the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative sample. Employing structural equation modeling, we examine the relationship between the latent construct of perceived job insecurity and various measures of mental well-being. We hypothesize that perceived job insecurity will be negatively associated with these mental well-being indicators, suggesting potential detrimental effects of perceived job insecurity on psychological health measures. 
 
@@ -39,7 +39,4 @@ This study investigates the impact of perceived job insecurity on self-rated men
 
 # References
 
-Burgard, S. A., Brand, J. E., & House, J. S. (2009). Perceived job insecurity and worker health in the United States. Social Science & Medicine, 69(5), 777–785. https://doi.org/10.1016/j.socscimed.2009.06.029
-
-McDonough, P. (2000). Job Insecurity and Health. International Journal of Health Services, 30(3), 453–476. https://doi.org/10.2190/BPFG-X3ME-LHTA-6RPV
 
