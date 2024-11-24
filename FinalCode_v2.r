@@ -121,6 +121,9 @@ nrow(CGSS)
 # 2. descriptive statistics
 # check distribution of each variable
 # workhours
+# remove the observation that has workhours 168
+CGSS <- CGSS[CGSS$workhours != 168, ]
+
 CGSS %>% 
     ggplot(aes(x = workhours)) +
     geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
@@ -284,12 +287,13 @@ CGSS %>% select(-id) %>%
 model1 = '
     # measurement model
 
-    insecurity =~ workhours + workcontract + workself + satisfaction + parttime + union 
-    mental =~ depressed + happy + health + workstress + wlb
+    insecurity =~ workhours + workcontract + workself + satisfaction + parttime + workstress 
 
     # structural model
     
-    mental ~ insecurity
+    depressed ~ insecurity
+    happy ~ insecurity
+    health ~ insecurity
     '
 fit1 = sem(model1, data = CGSS)
 summary(fit1)
