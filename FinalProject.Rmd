@@ -1,5 +1,5 @@
 ---
-title: "Title"
+title: "Does Perceived Job Insecurity Affect Mental Health? Evidence from the 2021 Chinese General Social Survey"
 author: "Team Kish"
 header-includes:
     - \usepackage{setspace}
@@ -23,6 +23,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE,
 
 ```{r packages and data, include=FALSE}
 library(tidyverse)
+load("FinalResults.RData")
 ```
 
 # Introduction
@@ -31,11 +32,39 @@ With rising global competition, industrial shifts, and economic recessions, an i
 
 This study investigates the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative sample. Employing structural equation modeling, we examine the relationship between the latent construct of perceived job insecurity and various measures of mental well-being. We hypothesize that perceived job insecurity will be negatively associated with these mental well-being indicators, suggesting potential detrimental effects of perceived job insecurity on psychological health measures. 
 
+## H1: Perceived job insecurity will be negatively associated with self-rated mental health.
+
+## H2: Perceived job insecurity will be negatively associated with self-rated mental health among different
+
+## H3: Perceived job insecurity will be negatively associated with self-rated mental health among different
+
 # Data and Methods
+
+## Data
+
+CGSS
+
+## Measures
+
+job insecurity: how to measure, 5; 
+
+mental health: how to measure, 3; 
+
+control variables: which variables, 2;
+
+## Analytical approach
+
+model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, which statistics?
 
 # Results
 
-# Discussion
+## Descriptive statistics
+
+## Job insecurity and mental health
+
+## job insecurity and mental health among different sex
+
+## job insecurity and mental health among different party membership
 
 # References
 
