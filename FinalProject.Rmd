@@ -73,7 +73,7 @@ model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, wh
 
 # Results
 
-## Descriptive statistics
+Table 1 shows the weighted descriptive statistics of the variables used in the analysis. The sample consists of 993 respondents, with an average weekly work hours of 49.92. Only a small proportion of respondents have an indinite term work contract, while the majority have a fixed-term contract. Most respondents report that they are mainly controlled by themselves at work, and they are satisfied with their jobs. The majority of respondents report that they sometimes feel work stress, and they rarely feel depressed. Most respondents report that they often feel happy, and they sometimes feel that their health affects their work or daily life. The sample is almost evenly split
 
 \singlespacing
 ```{r descriptive statistics, results='asis'}
