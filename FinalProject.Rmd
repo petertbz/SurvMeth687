@@ -9,9 +9,9 @@ header-includes:
 output: 
   pdf_document:
     latex_engine: xelatex
-linestretch: 1
+linestretch: 2
 geometry: margin = 1in
-fontsize: 11pt
+fontsize: 12pt
 mainfont: Times New Roman
 bibliography: references.bib
 csl: asa.csl
@@ -29,6 +29,8 @@ library(gtsummary)
 library(survey)
 library(knitr)
 library(kableExtra)
+library(semPlot)
+library(tidySEM)
 ## the following package needs to be installed manually
 ## because it is not available on CRAN
 ## some other dependencies may be required, follow the instructions
@@ -67,10 +69,13 @@ control variables: which variables, 2;
 
 model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, which statistics?
 
+![Structural Equation Model for Perceived Job Insecurity and Mental Health](sem_model.jpg)
+
 # Results
 
 ## Descriptive statistics
 
+\singlespacing
 ```{r descriptive statistics, results='asis'}
 CGSS2 = CGSS %>% 
   mutate(workhours = as.numeric(workhours),
@@ -152,6 +157,7 @@ as_kable_extra(descriptive, format = "latex", booktabs = TRUE, longtable = TRUE)
 
 ## Job insecurity and mental health
 
+\singlespacing
 ```{r H1 result, results='asis'}
 semTable(
   object = c(" " = fit1),
@@ -179,15 +185,41 @@ semTable(
 
 ## job insecurity and mental health among different sex categories
 
-```{r H2 result, results='asis'}
+\singlespacing
+```{r H2 result unconstrained, results='asis'}
 semTable(
   object = c(" " = fit2_sex),
   type = "latex",
   longtable = TRUE,
   paramSets = c("loadings", "slopes", "fits"),
-  caption = "Structural equation model results for the
-         relationship between perceived job insecurity and mental
-         health among different sex categories",
+  caption = "Perceived job insecurity and mental
+         health among different sex categories without constraints",
+  columns = c("eststars", "se"),
+  alpha = c(0.1, 0.05, 0.01),
+  varLabels = c(
+    "insecurity" = "Perceived job insecurity",
+    "mental" = "Mental health",
+    "workhours" = "Weekly work hours",
+    "workcontract" = "Type of work contract",
+    "workself" = "Work autonomy",
+    "satisfaction" = "Job satisfaction",
+    "workstress" = "Work stress",
+    "depressed" = "Feel depressed",
+    "happy" = "Feel happy",
+    "health" = "Health affects work/daily life"
+  )
+)
+```
+
+\singlespacing
+```{r H2 result constrained, results='asis'}
+semTable(
+  object = c(" " = fit2_sex_coef),
+  type = "latex",
+  longtable = TRUE,
+  paramSets = c("loadings", "slopes", "fits"),
+  caption = "Perceived job insecurity and mental
+         health among different sex categories without constraints",
   columns = c("eststars", "se"),
   alpha = c(0.1, 0.05, 0.01),
   varLabels = c(
@@ -206,6 +238,58 @@ semTable(
 ```
 
 ## job insecurity and mental health among different party memberships
+
+\singlespacing
+```{r H3 results unconstrained, results='asis'}
+semTable(
+  object = c(" " = fit3_party),
+  type = "latex",
+  longtable = TRUE,
+  paramSets = c("loadings", "slopes", "fits"),
+  caption = "Perceived job insecurity and mental
+         health among different sex categories without constraints",
+  columns = c("eststars", "se"),
+  alpha = c(0.1, 0.05, 0.01),
+  varLabels = c(
+    "insecurity" = "Perceived job insecurity",
+    "mental" = "Mental health",
+    "workhours" = "Weekly work hours",
+    "workcontract" = "Type of work contract",
+    "workself" = "Work autonomy",
+    "satisfaction" = "Job satisfaction",
+    "workstress" = "Work stress",
+    "depressed" = "Feel depressed",
+    "happy" = "Feel happy",
+    "health" = "Health affects work/daily life"
+  )
+)
+```
+
+\singlespacing
+```{r H3 results constrained, results='asis'}
+semTable(
+  object = c(" " = fit3_party_coef),
+  type = "latex",
+  longtable = TRUE,
+  paramSets = c("loadings", "slopes", "fits"),
+  caption = "Perceived job insecurity and mental
+         health among different sex categories without constraints",
+  columns = c("eststars", "se"),
+  alpha = c(0.1, 0.05, 0.01),
+  varLabels = c(
+    "insecurity" = "Perceived job insecurity",
+    "mental" = "Mental health",
+    "workhours" = "Weekly work hours",
+    "workcontract" = "Type of work contract",
+    "workself" = "Work autonomy",
+    "satisfaction" = "Job satisfaction",
+    "workstress" = "Work stress",
+    "depressed" = "Feel depressed",
+    "happy" = "Feel happy",
+    "health" = "Health affects work/daily life"
+  )
+)
+```
 
 # References
 
