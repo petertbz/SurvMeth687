@@ -65,7 +65,9 @@ control variables: which variables, 2;
 
 ## Analytical approach
 
-model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, which statistics? survey weights?
+model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, which statistics? survey weights (we only use for descriptive as this stage)?
+
+we treat working hours as continuous variable, and other variables as ordinal categorical variables. For those variables measuring job insecurity, the larger the value, the higher the insecurity. For those measuring mental health, the larger the value, the better the health.
 
 ![structural equation model for perceived job insecurity and mental health](sem_model.jpg)
 
