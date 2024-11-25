@@ -29,8 +29,6 @@ library(gtsummary)
 library(survey)
 library(knitr)
 library(kableExtra)
-library(semPlot)
-library(tidySEM)
 ## the following package needs to be installed manually
 ## because it is not available on CRAN
 ## some other dependencies may be required, follow the instructions
@@ -67,13 +65,13 @@ control variables: which variables, 2;
 
 ## Analytical approach
 
-model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, which statistics?
+model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, which statistics? survey weights?
 
-![Structural Equation Model for Perceived Job Insecurity and Mental Health](sem_model.jpg)
+![structural equation model for perceived job insecurity and mental health](sem_model.jpg)
 
 # Results
 
-Table 1 shows the weighted descriptive statistics of the variables used in the analysis. The sample consists of 993 respondents, with an average weekly work hours of 49.92. Only a small proportion of respondents have an indinite term work contract, while the majority have a fixed-term contract. Most respondents report that they are mainly controlled by themselves at work, and they are satisfied with their jobs. The majority of respondents report that they sometimes feel work stress, and they rarely feel depressed. Most respondents report that they often feel happy, and they sometimes feel that their health affects their work or daily life. The sample is almost evenly split
+Table 1 presents the weighted descriptive statistics of the variables used in the analysis. The sample consists of 993 respondents, with an average of 49.92 weekly work hours. A small proportion of respondents have an indefinite term work contract, while the majority have a fixed-term contract. Most respondents report that they have mainly control over their work and are satisfied with their jobs. The majority of respondents report that they rarely or sometimes experience work stress. Regarding mental health, most respondents report that they rarely or sometimes feel depressed and often or always feel happy. The majority of respondents indicate that their health never affects their work or daily life. The sample is almost evenly split by sex, with around 86% of respondents not being members of the Chinese Communist Party (CCP).
 
 \singlespacing
 ```{r descriptive statistics, results='asis'}
@@ -89,18 +87,18 @@ CGSS2 = CGSS %>%
          sex = as.factor(sex),
          party = as.factor(party)) %>% 
   mutate(workcontract = recode(workcontract, 
-                          "1" = "Infinite Term", 
-                          "2" = "Fixed Term", 
-                          "3" = "No Contract"),
-         workself = recode(workself, "1" = "Completely Controlled By Self",
-                            "2" = "Mainly Controlled By Self",
-                            "3" = "Mainly Controlled By Others",
-                            "4" = "Completely Controlled By Others"),
-         satisfaction = recode(satisfaction, "1" = "Very Satisfied", 
+                          "1" = "Infinite term", 
+                          "2" = "Fixed term", 
+                          "3" = "No contract"),
+         workself = recode(workself, "1" = "Completely controlled by self",
+                            "2" = "Mainly controlled by self",
+                            "3" = "Mainly controlled by others",
+                            "4" = "Completely controlled by others"),
+         satisfaction = recode(satisfaction, "1" = "Very satisfied", 
                                "2" = "Satisfied", 
                                "3" = "Neutral", 
                                "4" = "Dissatisfied", 
-                               "5" = "Very Dissatisfied"),
+                               "5" = "Very dissatisfied"),
          workstress = recode(workstress, "1" = "Rarely", 
                              "2" = "Sometimes", 
                              "3" = "Often", 
@@ -154,8 +152,9 @@ descriptive = design %>%
 
 as_kable_extra(descriptive, format = "latex", booktabs = TRUE, longtable = TRUE)
 ```
+\doublespacing
 
-## Job insecurity and mental health
+Table 2 presents the results of the structural equation model examining the relationship between perceived job insecurity and mental health, using WLSMV estimation. The model exhibits a Comparative Fit Index (CFI) of 0.94 and a Root Mean Square Error of Approximation (RMSEA) of 0.07, both of which are considered acceptable. For the measurement models, all factor loadings for the latent variable mental health are significant at the 0.01 level, while three out of four factor loadings are significant for the latent variable perceived job insecurity at the 0.1 level. The analysis reveals that perceived job insecurity negatively affects mental health, with a coefficient of -0.11 at the 0.01 significance level. In essence, higher perceived job insecurity correlates with poorer mental health, thereby supporting H1.
 
 \singlespacing
 ```{r H1 result, results='asis'}
@@ -178,12 +177,13 @@ semTable(
     "depressed" = "Feel depressed",
     "happy" = "Feel happy",
     "health" = "Health affects work/daily life"
-  )
+  ),
+  fits = c("chisq", "cfi", "tli", "rmsea")
 )
 ```
+\doublespacing
 
-
-## job insecurity and mental health among different sex categories
+Table 3 illustrates the results of the structural equation model that separately evaluates males and females without constraints. This model has a CFI of 0.93 and an RMSEA of 0.07, suggesting an acceptable fit. The findings indicate that perceived job insecurity adversely impacts mental health for both genders. However, the effect is more pronounced for females, with a coefficient of -0.15, compared to males, who have a coefficient of -0.10. To assess whether the relationship between perceived job insecurity and mental health is invariant between males and females, a constrained model equalizing the structural coefficients was tested. Table 4 details the results of the constrained model, which maintains the same CFI of 0.93 and RMSEA of 0.07 as the unconstrained model. Nonetheless, the chi-square test reveals that the constrained model fits significantly worse than the unconstrained model, indicating that the relationship is not invariant across genders. Therefore, females experience a more severe mental health decline due to perceived job insecurity, thus supporting H2.
 
 \singlespacing
 ```{r H2 result unconstrained, results='asis'}
@@ -211,7 +211,6 @@ semTable(
 )
 ```
 
-\singlespacing
 ```{r H2 result constrained, results='asis'}
 semTable(
   object = c(" " = fit2_sex_coef),
@@ -236,8 +235,9 @@ semTable(
   )
 )
 ```
+\doublespacing
 
-## job insecurity and mental health among different party memberships
+The relationship between perceived job insecurity and mental health is further analyzed among CCP and non-CCP residents. Table 5 provides the results of the structural equation model for these groups without any constraints. The model reports a CFI of 0.93 and an RMSEA of 0.07, signifying a good fit. The analysis shows that perceived job insecurity has a significantly negative effect on mental health for both CCP and non-CCP residents. However, the negative impact is stronger for non-CCP residents, with a coefficient of -0.12, compared to CCP residents, who have a coefficient of -0.05. To determine whether this relationship is invariant between CCP and non-CCP residents, a constrained model equalizing the structural coefficients was tested. Table 6 presents the results of the constrained model, which also maintains the same CFI of 0.93 and RMSEA of 0.07 as the unconstrained model. However, the chi-square test indicates that the constrained model is significantly worse than the unconstrained model, suggesting that the relationship is not invariant between the two groups. Consequently, non-CCP residents experience a more pronounced decline in mental health due to perceived job insecurity, thereby supporting H3.
 
 \singlespacing
 ```{r H3 results unconstrained, results='asis'}
@@ -265,7 +265,6 @@ semTable(
 )
 ```
 
-\singlespacing
 ```{r H3 results constrained, results='asis'}
 semTable(
   object = c(" " = fit3_party_coef),
@@ -290,6 +289,17 @@ semTable(
   )
 )
 ```
+\doublespacing
+
+# Further steps
+
+- we haven't used survey weights for SEM analysis, but we are still trying to find the package that can handle this
+
+- we will continue enhancing current writing and analysis
+
+# Appendix
+
+See more infomation on GitHub: https://github.com/petertbz/SurvMeth687Project
 
 # References
 
