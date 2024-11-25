@@ -52,21 +52,118 @@ Within the context of China, we hypothesize the following: 1) perceived job inse
 
 ## Data
 
-CGSS
+The data used for this analysis is drawn from the 2021 wave of the Chinese General Social Survey (CGSS), the first nationally representative and continuous survey project conducted by an academic institution in mainland China. Since its launch in 2003, the CGSS has been systematically monitoring changes in the relationship between social structure and quality of life across urban and rural areas of China. Social structure in the CGSS encompasses social groups, organizations, and networks of relationships, while quality of life includes both objective measures and subjective perceptions of well-being at both individual and aggregate levels. The 2021 wave of the CGSS provides a rich dataset that is particularly well-suited for this study, offering comprehensive measures of employment conditions, mental health, and demographic factors. Its large-scale, representative sampling ensures that the findings reflect the broader Chinese population, enabling robust analyses of the variations in job insecurity and mental health across different social and economic contexts.
 
 ## Measures
 
-job insecurity: how to measure, 5; 
+**???Job insecurity** is modeled as a latent variable to capture its multidimensional nature, integrating both objective factors (e.g., weekly work hours, employment contract type) and subjective perceptions (e.g., work-related stress, job autonomy, and job satisfaction). Treating job insecurity as a latent construct reduces measurement error and focuses on the shared variance across these indicators, ensuring a more robust representation of the underlying concept.???
 
-mental health: how to measure, 3; 
+**Weekly Work Hours**\
+Weekly work hours serve as an objective indicator of job insecurity, reflecting the stability and predictability of an individual's employment. Responses are recorded as a continuous variable, representing the number of hours worked per week. For this analysis, the variable is used in its original continuous form, as higher values may indicate potential irregularity or overwork, which are linked to greater job insecurity.
 
-control variables: which variables, 2;
+This measure is derived from the survey question:
 
-## Analytical approach
+*"A53a: When you are employed, how many hours do you usually work in a week, including overtime?".*
 
-model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, which statistics? survey weights (we only use for descriptive as this stage)?
+Responses are recorded as a continuous variable, representing the number of hours worked per week. For this analysis, the variable is used in its original continuous form, as higher values may indicate potential irregularity or overwork, which are linked to greater job insecurity.
 
-we treat working hours as continuous variable, and other variables as ordinal categorical variables. For those variables measuring job insecurity, the larger the value, the higher the insecurity. For those measuring mental health, the larger the value, the better the health.
+**Type of Work Contract**\
+Employment contract type captures the stability of an individual's formal employment relationship. Responses were recoded into three categories: "No contract," "Infinite term," and "Fixed term," with "No contract" representing the most insecure arrangement. The recoded variable is analyzed as a categorical factor, aligning with the study's conceptualization of job insecurity.
+
+This measure is based on the survey question:
+
+*"A59b: Have you signed a written labor contract with your employer for your current job?"*
+
+**Job Autonomy**\
+Job autonomy reflects the degree of control individuals perceive they have over their work processes. Lower autonomy (greater control by others) is associated with higher job insecurity. Responses were recoded into four categories: "Completely controlled by self," "Mainly controlled by self," "Mainly controlled by others," and "Completely controlled by others." The recoded variable is analyzed as an ordinal categorical factor.
+
+This variable is derived from the survey question:
+
+*"A59g: In your current job, to what extent can you independently decide the specific methods of your work?".*
+
+**Work Stress**\
+Work-related stress reflects the frequency of stress experienced in the work environment. Responses were recoded into four categories: "Rarely," "Sometimes," "Often," and "Always." Higher frequencies of stress indicate greater perceived job insecurity. This variable is analyzed as an ordinal categorical factor.
+
+This measure is based on the survey question:
+
+*"L11_c: How often do you feel significant work-related stress in your job?"*
+
+\
+**Job Satisfaction**\
+Job satisfaction captures the respondent's overall contentment with their current job. Responses were recoded into five categories: "Very satisfied," "Satisfied," "Neutral," "Dissatisfied," and "Very dissatisfied." Satisfaction levels were analyzed as an ordinal categorical factor, where lower satisfaction reflects higher levels of job insecurity.
+
+This measure is based on the survey question:
+
+*"L17: Overall, how satisfied are you with your current job?".*
+
+???In addition to job insecurity, **mental health** is treated as a latent variable in this analysis, measured using three self-reported indicators: depression feelings, happiness, and perceived health. These indicators capture distinct but interrelated dimensions of psychological well-being.???
+
+**Feel Depressed**\
+This indicator reflects the frequency of depressive symptoms.Responses were recoded into five categories: "Always," "Often," "Sometimes," "Rarely," and "Never." Higher values indicate fewer depressive symptoms and better mental health.
+
+This measure is derived from the question:
+
+*"A17: In the past four weeks, how often did you feel depressed or down?".*
+
+**Feel Happy**\
+Happiness reflects overall emotional positivity. Responses were recoded into five categories: "Never," "Rarely," "Sometimes," "Often," and "Always." Higher values indicate greater happiness, contributing to better mental health.
+
+This measure is derived from the question:
+
+*"A36: Overall, do you feel happy with your life?".*
+
+**Health Affects Work/Daily Life**
+
+Perceived health captures the frequency of health-related disruptions to work or daily activities. Responses were recoded into five categories: "Always," "Often," "Sometimes," "Rarely," and "Never." Higher values indicate better perceived health, contributing to the latent variable for mental health.
+
+This measure is derived from the question:
+
+*A16. "In the past four weeks, how often did health problems affect your work or other daily activities?"*
+
+**To account for potential confounding effects, the analysis includes sex and Chinese Communist Party Membership as control variables:**
+
+**Sex**\
+Sex is included to control for potential gender-based differences in job insecurity and mental health outcomes. Responses are recorded as a binary variable: Male and Female.
+
+This measure is derived from the question:
+
+*"What is your gender?"*
+
+**Party Membership**\
+Political affiliation was recoded into a binary variable to distinguish between CCP members and non-CCP members. Respondents identifying as CCP members were coded as **1**, and all other affiliations were coded as **0.** This recoding focuses on the key distinction between CCP membership and other affiliations, which may influence perceptions of job security and well-being.
+
+This measure is based on the question:
+
+*"A10: What is your current political affiliation?"*
+
+###  Analytical approach
+\
+#### **Model and Estimator**
+
+This analysis employs a structural equation model (SEM) to evaluate the relationship between two latent constructs: perceived job insecurity and mental health. The SEM framework allows the integration of multiple observed indicators into latent constructs, reducing measurement error and providing a robust method for understanding complex relationships.
+
+The Weighted Least Squares Mean and Variance Adjusted (WLSMV) estimator is used for parameter estimation. WLSMV is particularly suited for handling ordinal categorical data, which is common in this study (e.g., indicators such as job satisfaction, work-related stress, and happiness). This estimator accounts for the non-normality of categorical variables, provides robust standard errors, and adjusts chi-square values to better evaluate model fit. These features make WLSMV ideal for models where data includes ordinal or categorical responses. **(add more?)**
+
+#### **Model Structure**
+
+\
+The SEM includes two latent constructs:
+
+-   **Job insecurity** : capture its multidimensional nature, integrating both objective factors (e.g., weekly work hours, employment contract type) and subjective perceptions (e.g., work-related stress, job autonomy, and job satisfaction). Treating job insecurity as a latent construct reduces measurement error and focuses on the shared variance across these indicators, ensuring a more robust representation of the underlying concept.
+
+-    **Mental health** : measured using three self-reported indicators (feel depressed, feel happy, and health affects work/daily life). These indicators capture distinct but interrelated dimensions of psychological well-being.
+
+For the SEM model (Figure 1), we primary focus on the path coefficient linking perceived job insecurity and mental health, quantifying the direction and strength of the hypothesized relationship. Factor loadings are evaluated to confirm the validity of latent constructs.
+
+#### **Multiple Group Analysis (MGA)**
+\
+To explore subgroup differences, multiple group analysis (MGA) was conducted for two key demographic variables: gender (male vs. female) and Chinese Communist Party (CCP) membership (member vs. non-member). The analysis began with baseline model testing, where the model was applied to the full sample to ensure an adequate fit. Model fit was evaluated using standard indices such as chi-square (χ²), RMSEA, CFI, and TLI. This step established the validity of the overall model before proceeding with subgroup comparisons.
+
+The primary focus of the MGA was on comparing the path coefficients between perceived job insecurity and mental health across subgroups. Chi-square difference tests were performed to determine whether the strength of the relationship between the two latent constructs varied significantly by gender or CCP membership. These comparisons provided insights into potential subgroup differences in the impact of perceived job insecurity on mental health.
+
+#### **Survey Weights**
+\
+Survey weights from the CGSS are used only for descriptive statistics at this stage to ensure the representativeness of the sample. Inferential analyses are conducted without weights, as the WLSMV estimator is robust to sampling variability.
 
 ![structural equation model for perceived job insecurity and mental health](sem_model.jpg)
 
