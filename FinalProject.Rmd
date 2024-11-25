@@ -28,6 +28,7 @@ library(gtsummary)
 library(survey)
 library(knitr)
 library(kableExtra)
+library(semTable)
 
 load("FinalResults.RData")
 ```
@@ -149,6 +150,10 @@ as_kable_extra(descriptive, format = "latex", booktabs = TRUE, longtable = TRUE)
 ```
 
 ## Job insecurity and mental health
+
+```{r H1 result, results='asis'}
+semTable(fit1)
+```
 
 ## job insecurity and mental health among different sex categories
 
