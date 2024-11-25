@@ -23,6 +23,12 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE,
 
 ```{r packages and data, include=FALSE}
 library(tidyverse)
+library(lavaan)
+library(gtsummary)
+library(survey)
+library(knitr)
+library(kableExtra)
+
 load("FinalResults.RData")
 ```
 
@@ -32,11 +38,11 @@ With rising global competition, industrial shifts, and economic recessions, an i
 
 This study investigates the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative sample. Employing structural equation modeling, we examine the relationship between the latent construct of perceived job insecurity and various measures of mental well-being. We hypothesize that perceived job insecurity will be negatively associated with these mental well-being indicators, suggesting potential detrimental effects of perceived job insecurity on psychological health measures. 
 
-## H1: Perceived job insecurity will be negatively associated with self-rated mental health.
+H1: Perceived job insecurity will be negatively associated with self-rated mental health.
 
-## H2: Perceived job insecurity will be negatively associated with self-rated mental health among different
+H2: Perceived job insecurity will be negatively associated with self-rated mental health among different
 
-## H3: Perceived job insecurity will be negatively associated with self-rated mental health among different
+H3: Perceived job insecurity will be negatively associated with self-rated mental health among different
 
 # Data and Methods
 
@@ -60,11 +66,93 @@ model; estimator: "WLSMV", why?; which parameter (coeffient); MGA: how to do, wh
 
 ## Descriptive statistics
 
+```{r descriptive statistics, results='asis'}
+CGSS2 = CGSS %>% 
+  mutate(workhours = as.numeric(workhours),
+         workcontract = as.factor(workcontract),
+         workself = as.factor(workself),
+         satisfaction = as.factor(satisfaction),
+         workstress = as.factor(workstress),
+         depressed = as.factor(depressed),
+         happy = as.factor(happy),
+         health = as.factor(health),
+         sex = as.factor(sex),
+         party = as.factor(party)) %>% 
+  mutate(workcontract = recode(workcontract, 
+                          "1" = "Infinite Term", 
+                          "2" = "Fixed Term", 
+                          "3" = "No Contract"),
+         workself = recode(workself, "1" = "Completely Controlled By Self",
+                            "2" = "Mainly Controlled By Self",
+                            "3" = "Mainly Controlled By Others",
+                            "4" = "Completely Controlled By Others"),
+         satisfaction = recode(satisfaction, "1" = "Very Satisfied", 
+                               "2" = "Satisfied", 
+                               "3" = "Neutral", 
+                               "4" = "Dissatisfied", 
+                               "5" = "Very Dissatisfied"),
+         workstress = recode(workstress, "1" = "Rarely", 
+                             "2" = "Sometimes", 
+                             "3" = "Often", 
+                             "4" = "Always"),
+         depressed = recode(depressed, "1" = "Always", 
+                            "2" = "Often", 
+                            "3" = "Sometimes", 
+                            "4" = "Rarely", 
+                            "5" = "Never"),
+         happy = recode(happy, "1" = "Never", 
+                        "2" = "Rarely", 
+                        "3" = "Sometimes", 
+                        "4" = "Often", 
+                        "5" = "Always"),
+         health = recode(health, "1" = "Always", 
+                         "2" = "Often", 
+                         "3" = "Sometimes", 
+                         "4" = "Rarely",
+                         "5" = "Never"),
+         sex = recode(sex, "0" = "Female",
+                      "1" = "Male"),
+         party = recode(party, "0" = "Non-CCP", "1" = "CCP"))
+
+design = svydesign(id = ~1, weights = ~weight, data = CGSS2)
+
+descriptive = design %>% 
+  tbl_svysummary(
+    include = c(workhours, workcontract, workself, satisfaction, 
+                workstress, depressed, happy, health, sex, party),
+    digits = list(all_continuous() ~ 2, all_categorical() ~ 1),
+    statistic = list(all_continuous() ~ "{mean} ({sd})",
+                     all_categorical() ~ "{p}%"),
+    type = list(workhours ~ "continuous",
+                c(workcontract, workself, satisfaction, workstress, depressed, happy, health, sex, party) ~ "categorical"),
+    label = list(
+      workhours = "Weekly work hours",
+      workcontract = "Type of work contract",
+      workself = "Work autonomy",
+      satisfaction = "Job satisfaction",
+      workstress = "Work stress",
+      depressed = "Feel depressed",
+      happy = "Feel happy",
+      health = "Health affects work/daily life",
+      sex = "Sex",
+      party = "Party membership"
+  ) 
+) %>% 
+  modify_header(
+    label ~ "**Variable**",
+    all_stat_cols() ~ "Mean (SD) / Percent") %>% 
+  modify_footnote(everything() ~ NA) %>% 
+  modify_caption("Weighted descriptive statistics (N = 993)") %>%
+  bold_labels()
+
+as_kable_extra(descriptive, format = "latex", booktabs = TRUE, longtable = TRUE)
+```
+
 ## Job insecurity and mental health
 
-## job insecurity and mental health among different sex
+## job insecurity and mental health among different sex categories
 
-## job insecurity and mental health among different party membership
+## job insecurity and mental health among different party memberships
 
 # References
 
