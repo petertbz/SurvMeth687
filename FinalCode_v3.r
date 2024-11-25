@@ -9,7 +9,7 @@ library(stargazer)
 CGSS2021 = read_dta("CGSS2021.dta")
 
 # select variables and rename
-# consider split job insecurity into objective and subjective wellbeing: 
+# consider split job insecurity into objective and subjective well-being: 
 CGSS = CGSS2021 %>% 
   select(id, A53aa, A59b, A59g, A17, A36, L17, L11_c, L16_a, A45, A58a, A16, A2, A3_1, A18, A10, A7a, A62,
          weight, weight_raking) %>% 
@@ -37,6 +37,7 @@ CGSS = CGSS2021 %>%
 # recode variables
 CGSS = CGSS %>% 
   mutate(
+    # job insecurity
     # workhours: working hours per week
     workhours = ifelse(workhours == 998 | workhours == 999 | workhours == 168, NA, workhours), # remove 168
     # workcontract: type of work contract
@@ -49,18 +50,18 @@ CGSS = CGSS %>%
     # workself: job atonomy 
     # 1 = completely controlled by self, 4 =  completely controlled by others
     workself = ifelse(workself == 98 | workself == 99, NA, workself),
-    # depressed: feeling depressed
-    # 1 = all the time, 2 = often, 3 = sometimes, 4 = rarely, 5 = never
-    depressed = ifelse(depressed == 98 | depressed == 99, NA, depressed),
-    # happy: feeling happy
-    # 1 = very not happy, 2 = not happy, 3 = normal, 4 = happy, 5 = very happy
-    happy = ifelse(happy == 98 | happy == 99, NA, happy),
     # satisfaction
     # 1 = very satisfied , 2 = satisfied, 3 = normal, 4 = not satisfied, 5 = not satisfied
     satisfaction = ifelse(satisfaction == 98 | satisfaction == 99, NA, satisfaction),
     # workstress
-    # 1 = always , 2 = often, 3 = sometimes, 4 = rarely
-    workstress = ifelse(workstress == 98 | workstress == 99, NA, workstress),
+    # 1 = rarely, 2 = sometimes, 3 = often, 4 = always
+    workstress = case_when(
+      workstress == 98 | workstress == 99 ~ NA,
+      workstress == 1 ~ 4,
+      workstress == 2 ~ 3,
+      workstress == 3 ~ 2,
+      workstress == 4 ~ 1
+    ),
     # wlb：Impact of work on family or personal life
     # 1 = always, 2 = often, 3 = sometimes, 4 = rarely, 5 = never
     wlb = ifelse(wlb == 98 | wlb == 99, NA, wlb),
@@ -71,9 +72,18 @@ CGSS = CGSS %>%
     # 1 = yes, 2= no
     parttime = ifelse(parttime == 98 | parttime == 99, NA, parttime),
     
+    # mental health
+    # depressed: feeling depressed
+    # 1 = all the time, 2 = often, 3 = sometimes, 4 = rarely, 5 = never
+    depressed = ifelse(depressed == 98 | depressed == 99, NA, depressed),
+    # happy: feeling happy
+    # 1 = very not happy, 2 = not happy, 3 = normal, 4 = happy, 5 = very happy
+    happy = ifelse(happy == 98 | happy == 99, NA, happy),
     # health: did health affect your work or daily life
     # 1 = always, 2 = often, 3 = sometimes, 4 = rarely, 5 = never
     health = ifelse(health == 98, NA, health),
+    
+    # demographic variables
     # age
     age = 2021 - year,
     # sex: 0 = female； 1 = male
@@ -105,25 +115,25 @@ CGSS = CGSS %>%
     ## consder splitting into categories##
   )
 
-# remove incomplete cases
+# select variables of interest and remove incomplete cases
 CGSS = CGSS %>% 
-  na.omit() %>% 
-  select(id, workhours, workcontract, workself, 
-         depressed, happy,satisfaction,workstress,wlb,union,parttime,
-         health, age, sex, urban, party,
-         income, education,
-         weight, weight_raking)
+  select(id, 
+         workhours, workcontract, workself, satisfaction, workstress,
+         depressed, happy, health, 
+         sex, party,
+         weight, weight_raking) %>% 
+  na.omit()
+
+# remove the observation that has workhours == 168
+CGSS = CGSS[CGSS$workhours != 168, ]
+
 nrow(CGSS)
 
-# we have 1,049 cases
-# now 957
+# we have 993 cases
 
 # 2. descriptive statistics
 # check distribution of each variable
 # workhours
-# remove the observation that has workhours 168
-CGSS <- CGSS[CGSS$workhours != 168, ]
-
 CGSS %>% 
     ggplot(aes(x = workhours)) +
     geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
@@ -187,28 +197,12 @@ CGSS %>%
          x = "Health Affecting Work or Daily Life",
          y = "Frequency")
 
-# age
-CGSS %>% 
-    ggplot(aes(x = age)) +
-    geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
-    labs(title = "Distribution of Age",
-         x = "Age",
-         y = "Frequency")
-
 # sex
 CGSS %>%
     ggplot(aes(x = sex)) +
     geom_bar(fill = "skyblue", color = "black") +
     labs(title = "Distribution of Sex",
             x = "Sex",
-            y = "Frequency")
-
-# urban
-CGSS %>%
-    ggplot(aes(x = urban)) +
-    geom_bar(fill = "skyblue", color = "black") +
-    labs(title = "Distribution of Urban or Rural",
-            x = "Urban or Rural",
             y = "Frequency")
 
 # party
@@ -235,48 +229,8 @@ CGSS %>%
        x = "workstress",
        y = "Frequency")
 
-# wlb
-CGSS %>%
-  ggplot(aes(x =wlb)) +
-  geom_bar(fill = "skyblue", color = "black") +
-  labs(title = "Distribution of work impacted life",
-       x = "wlb",
-       y = "Frequency")
-
-#union
-CGSS %>%
-  ggplot(aes(x =union)) +
-  geom_bar(fill = "skyblue", color = "black") +
-  labs(title = "Distribution of union membership",
-       x = "union membership",
-       y = "Frequency")
-
-#parttime
-CGSS %>%
-  ggplot(aes(x =parttime)) +
-  geom_bar(fill = "skyblue", color = "black") +
-  labs(title = "Distribution of having parttime job",
-       x = "parttime job",
-       y = "Frequency")
-
-#income
-CGSS %>%
-  ggplot(aes(x =income)) +
-  geom_bar(fill = "skyblue", color = "black") +
-  labs(title = "Distribution of total family income in 2020",
-       x = "total family income",
-       y = "Frequency")
-
-# education
-CGSS %>%
-  ggplot(aes(x =education)) +
-  geom_bar(fill = "skyblue", color = "black") +
-  labs(title = "Distribution of highlest education",
-       x = "highest education",
-       y = "Frequency")
-
 # descriptive statistics
-CGSS %>% select(-id) %>% 
+CGSS %>% select(-c(id, weight, weight_raking)) %>% 
     as.data.frame() %>%
     stargazer(., type = "text", 
               title = "Descriptive Statistics of Variables",
@@ -287,62 +241,66 @@ CGSS %>% select(-id) %>%
 model1 = '
     # measurement model
 
-    insecurity =~ workhours + workcontract + workself + satisfaction + parttime + workstress 
-
-    # structural model
-    
-    depressed ~ insecurity
-    happy ~ insecurity
-    health ~ insecurity
-    '
-fit1 = sem(model1, data = CGSS)
-summary(fit1)
-
-# modification indices for model 1
-modificationIndices(fit1, sort = TRUE, minimum.value = 3)
-
-fit1_urban = sem(model1, data = CGSS, group = "urban")
-summary(fit1_urban)
-
-# however, other MGA cannot run
-fit1_sex = sem(model1, data = CGSS, group = "sex")
-summary(fit1_sex)
-
-#####################
-# recode working hours
-CGSS = CGSS %>% 
-    mutate(
-        workhours2 = case_when(
-            workhours <= 40 ~ 1,
-            workhours > 40 & workhours <= 50 ~ 2,
-            workhours > 50 ~ 3
-        )
-    )
-
-ggplot(CGSS, aes(x = workhours2)) +
-    geom_bar(fill = "skyblue", color = "black") +
-    labs(title = "Distribution of Working Hours per Week",
-         x = "Working Hours per Week",
-         y = "Frequency")
-
-model2 = '
-    # measurement model
-
-    insecurity =~ workhours2 + workcontract + workself
+    insecurity =~ workhours + workcontract + workself + satisfaction + workstress 
     mental =~ depressed + happy + health
 
     # structural model
     
     mental ~ insecurity
     '
-fit2 = sem(model2, data = CGSS)
-summary(fit2)
 
-# modification indices for model 2
-modificationIndices(fit2, sort = TRUE, minimum.value = 3)
+model2 = '
+    # measurement model
+    insecurity =~ workhours + workcontract + workself + satisfaction + workstress
+    mental =~ depressed + happy + health
 
-fit2_urban = sem(model2, data = CGSS, group = "urban")
-summary(fit2_urban)
+    # structural model (with constrained regression coefficient)
+    mental ~ c(b1, b1)*insecurity
+'
 
-fit2_sex = sem(model2, data = CGSS, group = "sex")
+fit1 = sem(model1, 
+           data = CGSS, 
+           estimator = "WLSMV", 
+           ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                       "depressed", "happy", "health"))
+summary(fit1)
 
+# sex
+fit2_sex = sem(model1, 
+               data = CGSS, 
+               estimator = "WLSMV", 
+               group = "sex",
+               ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                           "depressed", "happy", "health"))
+summary(fit2_sex)
+
+
+
+fit2_sex_coef = sem(model2, 
+               data = CGSS, 
+               estimator = "WLSMV", 
+               group = "sex",
+               ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                           "depressed", "happy", "health"))
+summary(fit2_sex_coef)
+
+# party
+fit3_party = sem(model1, 
+                 data = CGSS, 
+                 estimator = "WLSMV", 
+                 group = "party",
+                 ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                             "depressed", "happy", "health"))
+summary(fit3_party)
+
+fit3_party_coef = sem(model2, 
+                 data = CGSS, 
+                 estimator = "WLSMV", 
+                 group = "party",
+                 ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                             "depressed", "happy", "health"))
+summary(fit3_party_coef)
+
+# save the results
+rm(CGSS2021)
+save(list = ls(), file = "FinalResults.RData")
