@@ -6,6 +6,7 @@ header-includes:
     - \usepackage{longtable}
     - \usepackage{booktabs}
     - \usepackage{siunitx}
+    - \setlength{\parindent}{2em}
 output: 
   pdf_document:
     latex_engine: xelatex
@@ -15,6 +16,7 @@ fontsize: 12pt
 mainfont: Times New Roman
 bibliography: references.bib
 csl: asa.csl
+
 ---
 
 ```{r setup, include=FALSE}
@@ -39,15 +41,12 @@ load("FinalResults.RData")
 
 # Introduction
 
+
 With rising global competition, industrial shifts, and economic recessions, an increasing number of employees face concerns about layoffs. The instability and unpredictability of labor markets impose significant psychological burdens on workers, often resulting in adverse health outcomes linked to job insecurity. Understanding the relationship between job insecurity and health is crucial for informing interventions aimed at improving workers' well-being. Previous research has established a connection between perceived job insecurity and poor health outcomes. After accounting for demographic, socioeconomic, and job characteristics, as well as prior health conditions, perceived job insecurity was found associated with deteriorating health among U.S. workers [@burgard_perceived_2009]. Similarly, McDonough [-@mcdonough_job_2000], using a national sample of Canadian adults, reported that high levels of job insecurity lead to lower self-rated health, increased psychological distress, and increased use of medication for symptom relief.
 
-This study investigates the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative sample. Employing structural equation modeling, we examine the relationship between the latent construct of perceived job insecurity and various measures of mental well-being. We hypothesize that perceived job insecurity will be negatively associated with these mental well-being indicators, suggesting potential detrimental effects of perceived job insecurity on psychological health measures. 
+This study examines the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative dataset. Perceived job insecurity arises from subjective experiences and cannot be effectively captured by a single survey item. To address this, we use responses from multiple survey items to construct a latent variable for job insecurity, capturing its complex dynamics, as well as a latent variable for mental health. Utilizing structural equation modeling (SEM), we analyze the relationship between the latent perceived job insecurity and the latent mental well-being.
 
-H1: Perceived job insecurity will be negatively associated with self-rated mental health.
-
-H2: Perceived job insecurity will be negatively associated with self-rated mental health among different
-
-H3: Perceived job insecurity will be negatively associated with self-rated mental health among different
+Within the context of China, we hypothesize the following: 1) perceived job insecurity will be negatively associated with mental well-being indicators, reflecting its detrimental effects on psychological health; 2) the strength of this negative relationship will differ by gender; and 3) the negative relationship will also vary based on whether or not having the Chinese Communist Party (CCP) membership. By testing these hypotheses, this study provides insights into the effects of perceived job insecurity on mental health in a unique cultural setting.
 
 # Data and Methods
 
@@ -249,7 +248,7 @@ semTable(
   longtable = TRUE,
   paramSets = c("loadings", "slopes", "fits"),
   caption = "Perceived job insecurity and mental
-         health among different sex categories without constraints",
+         health of CCP Members Vs. Non-Members without constraints",
   columns = c("eststars", "se"),
   alpha = c(0.1, 0.05, 0.01),
   varLabels = c(
@@ -274,7 +273,7 @@ semTable(
   longtable = TRUE,
   paramSets = c("loadings", "slopes", "fits"),
   caption = "Perceived job insecurity and mental
-         health among different sex categories without constraints",
+         health of CCP Members Vs. Non-Members without constraints",
   columns = c("eststars", "se"),
   alpha = c(0.1, 0.05, 0.01),
   varLabels = c(
