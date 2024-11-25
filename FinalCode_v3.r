@@ -131,6 +131,12 @@ nrow(CGSS)
 
 # we have 993 cases
 
+# recode sex and party
+CGSS = CGSS %>%
+  mutate(sex = recode(sex, "0" = "Female",
+                      "1" = "Male"),
+         party = recode(party, "0" = "Non-CCP", "1" = "CCP"))
+
 # 2. descriptive statistics
 # check distribution of each variable
 # workhours

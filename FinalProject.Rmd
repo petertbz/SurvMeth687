@@ -5,6 +5,7 @@ header-includes:
     - \usepackage{setspace}
     - \usepackage{longtable}
     - \usepackage{booktabs}
+    - \usepackage{siunitx}
 output: 
   pdf_document:
     latex_engine: xelatex
@@ -28,6 +29,9 @@ library(gtsummary)
 library(survey)
 library(knitr)
 library(kableExtra)
+## the following package needs to be installed manually
+## because it is not available on CRAN
+## some other dependencies may be required, follow the instructions
 library(semTable)
 
 load("FinalResults.RData")
@@ -110,10 +114,7 @@ CGSS2 = CGSS %>%
                          "2" = "Often", 
                          "3" = "Sometimes", 
                          "4" = "Rarely",
-                         "5" = "Never"),
-         sex = recode(sex, "0" = "Female",
-                      "1" = "Male"),
-         party = recode(party, "0" = "Non-CCP", "1" = "CCP"))
+                         "5" = "Never"))
 
 design = svydesign(id = ~1, weights = ~weight, data = CGSS2)
 
@@ -152,10 +153,57 @@ as_kable_extra(descriptive, format = "latex", booktabs = TRUE, longtable = TRUE)
 ## Job insecurity and mental health
 
 ```{r H1 result, results='asis'}
-semTable(fit1)
+semTable(
+  object = c(" " = fit1),
+  type = "latex",
+  longtable = TRUE,
+  paramSets = c("loadings", "slopes", "fits"),
+  caption = "Structural equation model results for the
+         relationship between perceived job insecurity and mental
+         health",
+  varLabels = c(
+    "insecurity" = "Perceived job insecurity",
+    "mental" = "Mental health",
+    "workhours" = "Weekly work hours",
+    "workcontract" = "Type of work contract",
+    "workself" = "Work autonomy",
+    "satisfaction" = "Job satisfaction",
+    "workstress" = "Work stress",
+    "depressed" = "Feel depressed",
+    "happy" = "Feel happy",
+    "health" = "Health affects work/daily life"
+  )
+)
 ```
 
+
 ## job insecurity and mental health among different sex categories
+
+```{r H2 result, results='asis'}
+semTable(
+  object = c(" " = fit2_sex),
+  type = "latex",
+  longtable = TRUE,
+  paramSets = c("loadings", "slopes", "fits"),
+  caption = "Structural equation model results for the
+         relationship between perceived job insecurity and mental
+         health among different sex categories",
+  columns = c("eststars", "se"),
+  alpha = c(0.1, 0.05, 0.01),
+  varLabels = c(
+    "insecurity" = "Perceived job insecurity",
+    "mental" = "Mental health",
+    "workhours" = "Weekly work hours",
+    "workcontract" = "Type of work contract",
+    "workself" = "Work autonomy",
+    "satisfaction" = "Job satisfaction",
+    "workstress" = "Work stress",
+    "depressed" = "Feel depressed",
+    "happy" = "Feel happy",
+    "health" = "Health affects work/daily life"
+  )
+)
+```
 
 ## job insecurity and mental health among different party memberships
 
