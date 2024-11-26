@@ -49,7 +49,7 @@ Within the context of China, we have following hypotheses:
 
 H1: Perceived job insecurity is negatively associated with mental health.
 
-H2: The negative relationship between perceived job insecurity and mental health is different males and females.
+H2: The negative relationship between perceived job insecurity and mental health is different between males and females.
 
 H3: The negative relationship between perceived job insecurity and mental health is different between CCP members and non-CCP members.
 
