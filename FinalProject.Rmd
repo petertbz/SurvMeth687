@@ -45,7 +45,13 @@ With rising global competition, industrial shifts, and economic recessions, an i
 
 This study examines the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative dataset in China. Perceived job insecurity arises from subjective experiences and cannot be effectively captured by a single survey item. To address this, we use responses from multiple survey items to construct a latent variable for job insecurity, capturing its complex dynamics, as well as a latent variable for mental health. Utilizing structural equation modeling (SEM), we analyze the relationship between the latent perceived job insecurity and the latent mental well-being.
 
-Within the context of China, we hypothesize the following: 1) perceived job insecurity will be negatively associated with mental well-being indicators, reflecting its detrimental effects on psychological health; 2) the strength of this negative relationship will differ by gender; and 3) the negative relationship will also vary based on whether or not having the Chinese Communist Party (CCP) membership. By testing these hypotheses, this study provides insights into the effects of perceived job insecurity on mental health in a unique cultural setting.
+Within the context of China, we have following hypotheses:
+
+H1: Perceived job insecurity is negatively associated with mental health.
+
+H2: The negative relationship between perceived job insecurity and mental health is different males and females.
+
+H3: The negative relationship between perceived job insecurity and mental health is different between CCP members and non-CCP members.
 
 # Data and Methods
 
@@ -241,7 +247,7 @@ semTable(
 ```
 \doublespacing
 
-Table 4 illustrates the results of the SEM that separately evaluates males and females without constraints. This model has a CFI of 0.93 and an RMSEA of 0.07, suggesting an acceptable fit. The findings indicate that perceived job insecurity adversely impacts mental health for both genders. However, the effect is more pronounced for females with a coefficient of -0.15, compared to males with a coefficient of -0.10. To assess whether the relationship between perceived job insecurity and mental health is invariant between males and females, a constrained model equalizing the structural coefficient is tested. Table 5 details the results of the constrained model, which maintains the same CFI of 0.93 and RMSEA of 0.07 as the unconstrained model. The scaled chi-squared difference test between the constrained and unconstrained models has a p-value of 0.291, indicating that the constrained model is not significantly worse than the unconstrained model. Consequently, the relationship between perceived job insecurity and mental health is not significantly different between males and females, thereby rejecting H2.
+Table 4 illustrates the results of the SEM that separately evaluates males and females without constraints. This model has a CFI of 0.93 and an RMSEA of 0.07, suggesting an acceptable fit. The findings indicate that perceived job insecurity adversely impacts mental health for both genders. However, the effect is more pronounced for females with a coefficient of -0.15, compared to males with a coefficient of -0.10. To assess whether the relationship between perceived job insecurity and mental health is invariant between males and females, a constrained model equalizing the structural coefficient is tested. Table 5 details the results of the constrained model, which maintains the same CFI of 0.93 and RMSEA of 0.07 as the unconstrained model. The scaled chi-squared difference test between the constrained and unconstrained models has a p-value of 0.291, indicating that the constrained model is not significantly worse than the unconstrained model. Consequently, we cannot reject the null hypothesis that the relationship between perceived job insecurity and mental health is invariant, thereby failing to support H2.
 
 \singlespacing
 ```{r H2 result unconstrained, results='asis'}
@@ -295,7 +301,7 @@ semTable(
 ```
 \doublespacing
 
-The relationship between perceived job insecurity and mental health is further analyzed among CCP and non-CCP members. Table 6 provides the results of the SEM for the two groups without any constraints. The model reports a CFI of 0.93 and an RMSEA of 0.07, signifying a good fit. The analysis shows that perceived job insecurity has a significantly negative effect on mental health for both CCP and non-CCP residents. However, the negative impact is stronger for non-CCP members with a coefficient of -0.12, compared to CCP members with a coefficient of -0.05. To determine whether this relationship is invariant between CCP and non-CCP members, a constrained model equalizing the structural coefficient is tested. Table 7 presents the results of the constrained model, which also maintains the same CFI of 0.93 and RMSEA of 0.07 as the unconstrained model. However, the scaled chi-squared difference test indicates that the constrained model is significantly worse than the unconstrained model, with a p-value less than 0.01, suggesting that the relationship is not invariant between the two groups. Consequently, non-CCP members experience a more pronounced decline in mental health due to perceived job insecurity, thereby supporting H3.
+The relationship between perceived job insecurity and mental health is further analyzed among CCP and non-CCP members. Table 6 provides the results of the SEM for the two groups without any constraints. The model reports a CFI of 0.93 and an RMSEA of 0.07, signifying a good fit. The analysis shows that perceived job insecurity has a significantly negative effect on mental health for both CCP and non-CCP residents. However, the negative impact is stronger for non-CCP members with a coefficient of -0.12, compared to CCP members with a coefficient of -0.05. To determine whether this relationship is invariant between CCP and non-CCP members, a constrained model equalizing the structural coefficient is estimated. Table 7 presents the results of the constrained model, which also maintains the same CFI of 0.93 and RMSEA of 0.07 as the unconstrained model. However, the scaled chi-squared difference test indicates that the constrained model is significantly worse than the unconstrained model, with a p-value less than 0.01, suggesting that the relationship is not invariant between CCP members and non-CCP members. Therefore, we reject the null hypothesis and support H3.
 
 \singlespacing
 ```{r H3 results unconstrained, results='asis'}
@@ -330,7 +336,7 @@ semTable(
   longtable = TRUE,
   paramSets = c("loadings", "slopes", "fits"),
   caption = "Perceived job insecurity and mental
-         health of CCP Members Vs. Non-Members with constraints",
+         health of CCP Members Vs. Non-CCP Members with constraints",
   columns = c("eststars", "se"),
   alpha = c(0.1, 0.05, 0.01),
   varLabels = c(
