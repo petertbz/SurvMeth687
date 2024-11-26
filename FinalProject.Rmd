@@ -65,7 +65,7 @@ Job insecurity is modeled as a latent variable to capture its multidimensional n
 
 Besides job insecurity, mental health is also treated as a continuous latent variable, measured using three self-reported indicators: feel depressed, feel happy, and health affects work/daily life. These indicators capture distinct yet interrelated dimensions of psychological well-being. The feel depressed indicator reflects the frequency of depressive symptoms, with higher values indicating fewer symptoms and better mental health. Feel happy captures overall emotional positivity, with higher values representing greater happiness. Health affects work/daily life assesses the frequency of health-related disruptions to work or daily activities, with higher values reflecting better perceived health. The larger the latent mental health holds, the better the mental health is.
 
-Sex and party membership are included as the group variables to explore potential differences in the relationship between perceived job insecurity and mental health across groups. In the party membership variable, individuals are divided into two groups, CCP members and non-CCP members, 
+Sex and party membership are included as the group variables to explore potential differences in the relationship between perceived job insecurity and mental health across groups. In the party membership variable, individuals are divided into two groups, CCP members and non-CCP members.
 
 Table 1 provides a comprehensive overview of the measures for job insecurity, mental health, and group variables. 
 
