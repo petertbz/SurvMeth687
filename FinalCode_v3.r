@@ -255,6 +255,7 @@ model1 = '
     mental ~ insecurity
     '
 
+# equal regression coefficient
 model2 = '
     # measurement model
     insecurity =~ workhours + workcontract + workself + satisfaction + workstress
@@ -262,6 +263,16 @@ model2 = '
 
     # structural model (with constrained regression coefficient)
     mental ~ c(b1, b1)*insecurity
+'
+
+# equal regression coefficient and loadings
+model3 = '
+    # measurement model
+    insecurity =~ c(b1, b1)*workhours + c(b2, b2)*workcontract + c(b3, b3)*workself + c(b4, b4)*satisfaction + c(b5, b5)*workstress
+    mental =~ c(b6, b6)*depressed + c(b7, b7)*happy + c(b8, b8)*health
+
+    # structural model (with constrained regression coefficient)
+    mental ~ c(b9, b9)*insecurity
 '
 
 fit1 = sem(model1, 
@@ -290,6 +301,17 @@ fit2_sex_coef = sem(model2,
                            "depressed", "happy", "health"))
 summary(fit2_sex_coef)
 
+lavTestLRT(fit2_sex, fit2_sex_coef)
+
+fit2_sex_load = sem(model3, 
+               data = CGSS, 
+               estimator = "WLSMV", 
+               group = "sex",
+                ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                            "depressed", "happy", "health"))
+
+lavTestLRT(fit2_sex, fit2_sex_coef, fit2_sex_load)
+
 # party
 fit3_party = sem(model1, 
                  data = CGSS, 
@@ -306,6 +328,8 @@ fit3_party_coef = sem(model2,
                  ordered = c("workcontract", "workself", "satisfaction", "workstress",
                              "depressed", "happy", "health"))
 summary(fit3_party_coef)
+
+lavTestLRT(fit3_party, fit3_party_coef)
 
 # save the results
 rm(CGSS2021)
