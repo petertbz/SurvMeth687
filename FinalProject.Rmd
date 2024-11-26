@@ -360,5 +360,3 @@ semTable(
 See more infomation on GitHub: https://github.com/petertbz/SurvMeth687Project
 
 # References
-
-
