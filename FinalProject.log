@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.25)  26 NOV 2024 12:50
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.25)  3 DEC 2024 11:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -4454,12 +4454,11 @@ Package siunitx Info: Option "table-space-text-post" has been deprecated in
 (siunitx)             
 (siunitx)             Use "table-format" as a replacement.
 
+LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/m/it' will be
+(Font)              scaled to size 12.0pt on input line 641.
 
 
 [12]
-LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/m/it' will be
-(Font)              scaled to size 12.0pt on input line 657.
-
 
 [13] (./FinalProject.aux)
  ***********
@@ -4468,10 +4467,10 @@ L3 programming layer <2024-11-02>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 21417 strings out of 475994
- 430186 string characters out of 5777056
- 979194 words of memory out of 5000000
- 43925 multiletter control sequences out of 15000+600000
+ 21413 strings out of 475994
+ 430108 string characters out of 5777056
+ 979156 words of memory out of 5000000
+ 43921 multiletter control sequences out of 15000+600000
  564700 words of font info for 100 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  90i,12n,125p,355b,916s stack positions out of 10000i,1000n,20000p,200000b,200000s

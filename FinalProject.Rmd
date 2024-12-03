@@ -355,14 +355,10 @@ semTable(
 ```
 \doublespacing
 
-# Further steps
+# References
 
-- we haven't used survey weights for SEM analysis, but we are still trying to find the package that can handle this
-
-- we will continue enhancing current writing and analysis
+<div id="refs"></div>
 
 # Appendix
 
 See more infomation on GitHub: https://github.com/petertbz/SurvMeth687Project
-
-# References
