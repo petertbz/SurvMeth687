@@ -29,7 +29,9 @@ The final report for each topic should be submitted for grading through Canvas (
 
 1. Can we have more than 2 citation?
 
-2. Our survey uses multi-stage stratified sampling design, selecting county-level PSUs and community-level SSUs using PPS methods, with households sampled in each SSU and one adult per householdselected via the Kish grid. Is it OK for us to treat each observatrion as independent? In other words, do we still need to account for cluster (e.g. county and community)? See sampling design: http://cgss.ruc.edu.cn/English/Documentation/Sampling_Design.htm
+2. Our survey uses multi-stage stratified sampling design, selecting county-level PSUs and community-level SSUs using PPS methods, with households sampled in each SSU and one adult per householdselected via the Kish grid. Is it OK for us to treat each observatrion as independent? In other words, do we still need to account for cluster and strata (e.g. county-level and community-level as cluster; region as strata)? See sampling design: http://cgss.ruc.edu.cn/English/Documentation/Sampling_Design.htm
+
+update: only community is available in the dataset. Neither county nor strata is available.
 
 # Further steps
 
