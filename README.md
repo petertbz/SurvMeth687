@@ -31,7 +31,9 @@ The final report for each topic should be submitted for grading through Canvas (
 
 2. Our survey uses multi-stage stratified sampling design, selecting county-level PSUs and community-level SSUs using PPS methods, with households sampled in each SSU and one adult per householdselected via the Kish grid. Is it OK for us to treat each observatrion as independent? In other words, do we still need to account for cluster and strata (e.g. county-level and community-level as cluster; region as strata)? See sampling design: http://cgss.ruc.edu.cn/English/Documentation/Sampling_Design.htm
 
-update: only community is available in the dataset. Neither county nor strata is available.
+update 1: only community is available in the dataset. Neither county nor strata is available.
+
+update 2: `lavaan.survey` can still be installed from the archive, but it only supports `WLS`. We use `WLSMV` in our preliminary report to handle the non-normality and ordinal categorical issues. `lavaan` allows us to have sampling weights and cluster, respectively. 
 
 # Further steps
 

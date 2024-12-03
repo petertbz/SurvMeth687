@@ -359,12 +359,40 @@ design = svydesign(ids = ~1, weights = ~weight, data = CGSS)
 ## treat each community as a cluster (SSU-level)
 design2 = svydesign(ids = ~community_i, weights = ~weight, data = CGSS)
 
-# only WLS is supported
+# only WLS is supported, account for survey weights
 fit1_survey = lavaan.survey(fit1, design, estimator = "WLS")
 summary(fit1_survey)
 
-fit_sruvey2 = lavaan.survey(fit1, design2, estimator = "WLS")
+# account for survey weights and cluster
+fit1_survey2 = lavaan.survey(fit1, design2, estimator = "WLS")
 summary(fit_sruvey2)
+
+# account for survey weights using lavaan
+fit1_survey3 = sem(model1,
+  data = CGSS,
+  estimator = "WLSMV",
+  ordered = c(
+    "workcontract", "workself", "satisfaction", "workstress",
+    "depressed", "happy", "health"
+  ),
+  sampling.weights = "weight"
+)
+summary(fit1_survey3)
+
+## not supported
+# Error: lavaan->lav_lavaan_step02_options():
+#   categorical + clustered is not supported yet.
+fit1_survey4 = sem(model1,
+  data = CGSS,
+  estimator = "WLSMV",
+  ordered = c(
+    "workcontract", "workself", "satisfaction", "workstress",
+    "depressed", "happy", "health"
+  ),
+  sampling.weights = "weight",
+  cluster = "community_i"
+)
+summary(fit1_survey4)
 
 # save the results
 rm(CGSS2021)
