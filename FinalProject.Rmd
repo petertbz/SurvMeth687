@@ -131,7 +131,7 @@ Figure 1 shows the structural equation model for perceived job insecurity and me
 
 To explore whether the relationship between perceived job insecurity and mental health is invariant across different groups, we conduct a multiple group analysis (MGA) for two grouping variables: sex and party membership. First, we estimate the model separately for males and females without imposing any constraints to examine the relationship. Next, we test the invariance of this relationship by constraining the structural coefficient to be equal across sexes. A similar procedure is applied to compare CCP members and non-members. If the constrained models show a significantly worse fit compared to the unconstrained models, it indicates that the relationship between perceived job insecurity and mental health varies across groups.
 
-Survey weights are used for descriptive statistics to ensure the representativeness of the sample. However, we have not incorporated survey weights into the SEM analysis, due to the lack of a suitable package that can handle this. As for missing data, we have used pairwise deletion to handle missing values in the analysis, under the assumption that the data is missing completely at random (MCAR).
+Survey weights are used for descriptive statistics to ensure the representativeness of the sample. However, we have not incorporated survey weights into the SEM analysis, due to the lack of a suitable package that can handle this. As for missing data, we have used listwise deletion to handle missing values in the analysis, under the assumption that the data is missing completely at random (MCAR).
 
 # Results
 
