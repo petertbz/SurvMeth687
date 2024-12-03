@@ -24,3 +24,19 @@ parentheses):
 6. Analysis Report (80 points total): Drafting a brief analysis report that describes Sections 1 through 5 above in clear detail (including model notation), including overall conclusions (10 points), interpretation of results, and software code used (clearly commented in a required Appendix)
 
 The final report for each topic should be submitted for grading through Canvas (only), no later than **5:00pm** on the due date indicated in the syllabus. The reports will be graded with respect to: 1) Parts 1 through 6 above; 2) the clarity of the material presented; 3) the quality of the technical writing and the English grammar; and 4) correct interpretation of the results. Figures and tables can certainly be used to enhance the report and describe the data being analyzed or the results of interest. Analysis reports should be double-spaced, using **12-point font, and no more than 10 pages long, including all equations, tables and figures (tables and figures will not be allowed in appendices)**. This makes concise writing extremely important. The software code provided in the Appendix should be clearly commented and easy to follow.
+
+# Questions
+
+1. Can we have more than 2 citation?
+
+2. Our survey uses multi-stage stratified sampling design, selecting county-level PSUs and community-level SSUs using PPS methods, with households sampled in each SSU and one adult per householdselected via the Kish grid. Is it OK for us to treat each observatrion as independent? In other words, do we still need to account for cluster (e.g. county and community)? See sampling design: http://cgss.ruc.edu.cn/English/Documentation/Sampling_Design.htm
+
+# Further steps
+
+1. briefly introduce the theoretical framework of the hypothesis and contribution
+
+2. add citation and abbreviations in the data and method part
+
+3. check sampling weights in the subsets and use sampling weights if allowed
+
+4. polish writing
