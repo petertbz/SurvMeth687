@@ -132,7 +132,7 @@ CGSS = CGSS %>%
   select(id, 
          workhours, workcontract, workself, satisfaction, workstress,
          depressed, happy, health, 
-         sex, party,
+         party,
          provinces, community_i, weight, weight_raking) %>% 
   na.omit()
 
@@ -145,8 +145,7 @@ nrow(CGSS)
 
 # recode sex and party
 CGSS = CGSS %>%
-  mutate(sex = recode(sex, "0" = "Female",
-                      "1" = "Male"),
+  mutate(# sex = recode(sex, "0" = "Female", "1" = "Male"),
          party = recode(party, "0" = "Non-CCP", "1" = "CCP"))
 
 # 2. descriptive statistics
@@ -215,14 +214,6 @@ CGSS %>%
          x = "Health Affecting Work or Daily Life",
          y = "Frequency")
 
-# sex
-CGSS %>%
-    ggplot(aes(x = sex)) +
-    geom_bar(fill = "skyblue", color = "black") +
-    labs(title = "Distribution of Sex",
-            x = "Sex",
-            y = "Frequency")
-
 # party
 CGSS %>%
     ggplot(aes(x = party)) +
@@ -286,16 +277,6 @@ model2 = '
     mental ~ c(b1, b1)*insecurity
 '
 
-# equal regression coefficient and loadings
-model3 = '
-    # measurement model
-    insecurity =~ c(b1, b1)*workhours + c(b2, b2)*workcontract + c(b3, b3)*workself + c(b4, b4)*satisfaction + c(b5, b5)*workstress
-    mental =~ c(b6, b6)*depressed + c(b7, b7)*happy + c(b8, b8)*health
-
-    # structural model (with constrained regression coefficient)
-    mental ~ c(b9, b9)*insecurity
-'
-
 fit1 = sem(model1, 
            data = CGSS, 
            estimator = "WLSMV", 
@@ -303,35 +284,61 @@ fit1 = sem(model1,
                        "depressed", "happy", "health"))
 summary(fit1)
 
-# sex
-fit2_sex = sem(model1, 
-               data = CGSS, 
-               estimator = "WLSMV", 
-               group = "sex",
-               ordered = c("workcontract", "workself", "satisfaction", "workstress",
-                           "depressed", "happy", "health"))
-summary(fit2_sex)
+# account for survey design
+## treat each individual as independent and ignore cluster
+design = svydesign(ids = ~1, weights = ~weight, data = CGSS)
 
+## treat each community as a cluster (SSU-level)
+design2 = svydesign(ids = ~community_i, weights = ~weight, data = CGSS)
 
+# only WLS is supported, account for survey weights
+fit1_survey = lavaan.survey(fit1, design, estimator = "WLS")
+summary(fit1_survey)
 
-fit2_sex_coef = sem(model2, 
-               data = CGSS, 
-               estimator = "WLSMV", 
-               group = "sex",
-               ordered = c("workcontract", "workself", "satisfaction", "workstress",
-                           "depressed", "happy", "health"))
-summary(fit2_sex_coef)
+# account for survey weights and cluster
+fit1_survey2 = lavaan.survey(fit1, design2, estimator = "WLS")
+summary(fit1_survey2)
 
-lavTestLRT(fit2_sex, fit2_sex_coef)
+# account for survey weights using lavaan
+fit1_survey3 = sem(model1,
+  data = CGSS,
+  estimator = "WLSMV",
+  ordered = c(
+    "workcontract", "workself", "satisfaction", "workstress",
+    "depressed", "happy", "health"
+  ),
+  sampling.weights = "weight"
+)
+summary(fit1_survey3)
 
-fit2_sex_load = sem(model3, 
-               data = CGSS, 
-               estimator = "WLSMV", 
-               group = "sex",
-                ordered = c("workcontract", "workself", "satisfaction", "workstress",
-                            "depressed", "happy", "health"))
+# the result from unweighted and weighted data are similar
 
-lavTestLRT(fit2_sex, fit2_sex_coef, fit2_sex_load)
+# check modifiication indices
+modindices(fit1, minimum = 10, sort = TRUE)
+
+# the suggestion from modification indices does not make sense
+# but we still try one to see the result
+model4 = '
+    # measurement model
+
+    insecurity =~ workhours + workcontract + workself + satisfaction + workstress 
+    mental =~ depressed + happy + health
+
+    # structural model
+    
+    mental ~ insecurity
+
+    # covariance
+    depressed ~~ health
+    '
+
+fit2 = sem(model4, 
+           data = CGSS, 
+           estimator = "WLSMV", 
+           ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                       "depressed", "happy", "health"))
+summary(fit2)
+# this result is similar to the previous one
 
 # party
 fit3_party = sem(model1, 
@@ -352,47 +359,28 @@ summary(fit3_party_coef)
 
 lavTestLRT(fit3_party, fit3_party_coef)
 
-# account for survey design
-## treat each individual as independent
-design = svydesign(ids = ~1, weights = ~weight, data = CGSS)
+## if we use survey weights
+fit3_party_survey = sem(model1, 
+                        data = CGSS, 
+                        estimator = "WLSMV", 
+                        group = "party",
+                        ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                                    "depressed", "happy", "health"),
+                        sampling.weights = "weight")
 
-## treat each community as a cluster (SSU-level)
-design2 = svydesign(ids = ~community_i, weights = ~weight, data = CGSS)
+summary(fit3_party_survey)
 
-# only WLS is supported, account for survey weights
-fit1_survey = lavaan.survey(fit1, design, estimator = "WLS")
-summary(fit1_survey)
+fit3_party_coef_survey = sem(model2, 
+                             data = CGSS, 
+                             estimator = "WLSMV", 
+                             group = "party",
+                             ordered = c("workcontract", "workself", "satisfaction", "workstress",
+                                         "depressed", "happy", "health"),
+                             sampling.weights = "weight")
+summary(fit3_party_coef_survey)
 
-# account for survey weights and cluster
-fit1_survey2 = lavaan.survey(fit1, design2, estimator = "WLS")
-summary(fit_sruvey2)
-
-# account for survey weights using lavaan
-fit1_survey3 = sem(model1,
-  data = CGSS,
-  estimator = "WLSMV",
-  ordered = c(
-    "workcontract", "workself", "satisfaction", "workstress",
-    "depressed", "happy", "health"
-  ),
-  sampling.weights = "weight"
-)
-summary(fit1_survey3)
-
-## not supported
-# Error: lavaan->lav_lavaan_step02_options():
-#   categorical + clustered is not supported yet.
-fit1_survey4 = sem(model1,
-  data = CGSS,
-  estimator = "WLSMV",
-  ordered = c(
-    "workcontract", "workself", "satisfaction", "workstress",
-    "depressed", "happy", "health"
-  ),
-  sampling.weights = "weight",
-  cluster = "community_i"
-)
-summary(fit1_survey4)
+lavTestLRT(fit3_party_survey, fit3_party_coef_survey)
+# the result is similar to the unweighted data
 
 # save the results
 rm(CGSS2021)
