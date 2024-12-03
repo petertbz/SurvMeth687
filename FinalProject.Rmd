@@ -7,6 +7,8 @@ header-includes:
     - \usepackage{booktabs}
     - \usepackage{siunitx}
     - \setlength{\parindent}{2em}
+    - \usepackage{titling} 
+    - \setlength{\droptitle}{-2cm}
 output: 
   pdf_document:
     latex_engine: xelatex
