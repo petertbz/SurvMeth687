@@ -57,7 +57,7 @@ H2: The negative relationship between perceived job insecurity and mental health
 
 ## Data
 
-The data used for this analysis is drawn from the 2021 Chinese General Social Survey (CGSS), the first nationally representative and continuous survey project conducted in mainland China. CGSS uses multi-stage stratified sampling design, selecting county-level primary sampling units (PSUs) and community-level secondary sampling units (SSUs) using probability proportional to size (PPS) methods. Households are sampled within each SSU, and one adult per household is selected using the Kish grid. The large-scale, representative sampling ensures that the findings reflect the broader Chinese population, enabling robust analyses of the variations in job insecurity and mental health across different social and economic contexts.
+The data used for this analysis is drawn from the 2021 Chinese General Social Survey (CGSS), the first nationally representative and continuous survey project conducted in mainland China. CGSS uses multi-stage stratified sampling design, selecting county-level primary sampling units (PSUs) and community-level secondary sampling units (SSUs) using probability proportional to size (PPS) methods. Households are sampled within each SSU, and one adult per household is selected using the Kish grid **###citation##**. The large-scale, representative sampling ensures that the findings reflect the broader Chinese population, enabling robust analyses of the variations in job insecurity and mental health across different social and economic contexts.
 
 ## Measures
 
