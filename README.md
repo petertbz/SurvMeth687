@@ -28,8 +28,9 @@ The final report for each topic should be submitted for grading through Canvas (
 # Questions
 
 1. Can we have more than 2 citation?
+   - Yes
 
-2. Our survey uses multi-stage stratified sampling design, selecting county-level PSUs and community-level SSUs using PPS methods, with households sampled in each SSU and one adult per householdselected via the Kish grid. Is it OK for us to treat each observatrion as independent? In other words, do we still need to account for cluster and strata (e.g. county-level and community-level as cluster; region as strata)? See sampling design: http://cgss.ruc.edu.cn/English/Documentation/Sampling_Design.htm
+3. Our survey uses multi-stage stratified sampling design, selecting county-level PSUs and community-level SSUs using PPS methods, with households sampled in each SSU and one adult per householdselected via the Kish grid. Is it OK for us to treat each observatrion as independent? In other words, do we still need to account for cluster and strata (e.g. county-level and community-level as cluster; region as strata)? See sampling design: http://cgss.ruc.edu.cn/English/Documentation/Sampling_Design.htm
 
 update 1: only community is available in the dataset. Neither county nor strata is available.
 
@@ -39,8 +40,10 @@ update 2: `lavaan.survey` can still be installed from the archive, but it only s
 
 1. briefly introduce the theoretical framework of the hypothesis and contribution
 
-2. add citation and abbreviations in the data and method part
+2. add citation in the data part: Households are sampled within each SSU, and one adult per household is selected using the Kish grid.
 
 3. check sampling weights in the subsets and use sampling weights if allowed
 
 4. polish writing
+
+5. Double check formatting: All paragraphs except the first one in the introduction have indentations.
