@@ -1,0 +1,282 @@
+---
+title: "Does Perceived Job Insecurity Affect Mental Health? Evidence from the 2021 Chinese General Social Survey"
+author: "Team Kish"
+header-includes:
+    - \usepackage{setspace}
+    - \usepackage{longtable}
+    - \usepackage{booktabs}
+    - \usepackage{siunitx}
+    - \setlength{\parindent}{2em}
+    - \usepackage{titling} 
+    - \setlength{\droptitle}{-2cm}
+output: 
+  pdf_document:
+    latex_engine: xelatex
+linestretch: 2
+geometry: margin = 1in
+fontsize: 12pt
+mainfont: Times New Roman
+bibliography: references.bib
+csl: asa.csl
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE,
+                      eval = TRUE)
+```
+
+```{r packages and data, include=FALSE}
+library(tidyverse)
+library(lavaan)
+library(gtsummary)
+library(survey)
+library(knitr)
+library(kableExtra)
+## the following package needs to be installed manually
+## because it is not available on CRAN
+## some other dependencies may be required, follow the instructions
+library(semTable)
+
+load("FinalResults.RData")
+```
+
+# Introduction
+
+With rising global competition, industrial shifts, and economic recessions, an increasing number of employees face concerns about layoffs. The instability and unpredictability of labor markets impose significant psychological burdens on workers, often resulting in adverse health outcomes linked to job insecurity. Understanding the relationship between job insecurity and mental health is essential for designing interventions to enhance workers' well-being and for uncovering the underlying causes of health inequalities across diverse social groups.
+
+Previous research has established a connection between perceived job insecurity and poor health outcomes. After accounting for demographic, socioeconomic, and job characteristics, as well as prior health conditions, perceived job insecurity was found associated with deteriorating health among U.S. workers [@burgard_perceived_2009]. Similarly, McDonough [-@mcdonough_job_2000], using a national sample of Canadian adults, reported that high levels of job insecurity lead to lower self-rated health, increased psychological distress, and increased use of medication for symptom relief. In China, higher job insecurity could similarly bring more stress and anxiety, leading to negative mental health outcomes. Based on this, we propose the following hypothesis:
+
+H1: Perceived job insecurity is negatively associated with mental health.
+
+Within China's unique cultural and political context, membership in the Chinese Communist Party (CCP) provides individuals with political capital, enhancing opportunities for upward mobility in political and managerial positions for occupations [@bian2001communist]. CCP membership is also associated with income premiums [@xie1996regional; @dickson2000membership; @liu2003economic], higher wealth accumulation [@jin2017social], and increased life satisfaction in urban areas [@appleton2008life]. These advantages may buffer CCP members from the negative effects of job insecurity on mental health compared to non-CCP members. Therefore, we propose the following hypothesis:
+
+H2: The negative relationship between perceived job insecurity and mental health is different between CCP members and non-CCP members.
+
+# Data and Methods
+
+## Data
+
+We use the data from the 2021 Chinese General Social Survey (CGSS), a nationally representative survey conducted in mainland China. CGSS uses multi-stage stratified sampling design, selecting county-level primary sampling units (PSUs) and community-level secondary sampling units (SSUs) using probability proportional to size (PPS) methods. Households are sampled within each SSU, and one adult per household is selected using the Kish grid [@chinese_general_social_survey_sampling_2024]. CGSS ensures that our sample is representative of the Chinese population, allowing us to generalize our findings to the broader population.
+
+## Measures
+
+Job insecurity is modeled as a latent variable to capture its multidimensional nature, integrating both objective factors and subjective perceptions [@burgard_perceived_2009]. Treating job insecurity as a latent construct reduces measurement error and brings a more robust representation of the underlying concept. For objective measures, weekly work hours reflect the stability and predictability of an individual's employment. Higher values in this analysis may indicate potential irregularity or overwork, which are linked to greater job insecurity. Employment contract type captures the stability of an individual's formal employment relationship, with "No contract" representing the most insecure arrangement. The recoded variable is treated as a categorical factor to align with the conceptualization of job insecurity. For subjective measures, job autonomy reflects the degree of control individuals perceive they have over their work processes. Lower autonomy (greater control exerted by others) is associated with higher job insecurity. Work-related stress measures the frequency of stress experienced in the work environment, while job satisfaction reflects the respondent's overall contentment with their current job. In this analysis, lower satisfaction corresponds to higher levels of job insecurity. Based on the measurement above, we construct a continuous latent variable for perceived job insecurity. The larger the value holds, the higher the perceived job insecurity is.
+
+Besides job insecurity, mental health is also treated as a continuous latent variable, measured using three self-reported indicators: feel depressed, feel happy, and health affects work/daily life. These indicators capture distinct yet interrelated dimensions of psychological well-being. "Feel depressed" reflects the frequency of depressive symptoms, with higher values indicating fewer symptoms and better mental health. "Feel happy" captures overall emotional positivity, with higher values representing greater happiness. "Health" affects work/daily life assesses the frequency of health-related disruptions to work or daily activities, with higher values reflecting better perceived health. The larger the latent mental health holds, the better the mental health is.
+
+Party membership is included as the group variable to explore potential differences in the relationship between perceived job insecurity and mental health across subgroups. Individuals are divided into two groups, CCP members and non-CCP members.
+
+Table 1 provides a comprehensive overview of the measures for job insecurity, mental health, and the group variable. 
+
+\singlespacing
+```{r , response questions}
+summary_table <- data.frame(
+  Variable = c("Weekly Work Hours",
+               "Type of Work Contract",
+               "Job Autonomy",
+               "Work Stress",
+               "Job Satisfaction",
+               "Feel Depressed",
+               "Feel Happy",
+               "Health Affects Work/Daily Life",
+               "Party Membership"),
+  `Survey Question` = c(
+    "A53a: When you are employed, how many hours do you usually work in a week, including overtime?",
+    "A59b: Have you signed a written labor contract with your employer for your current job?",
+    "A59g: In your current job, to what extent can you independently decide the specific methods of your work?",
+    "L11_c: How often do you feel significant work-related stress in your job?",
+    "L17: Overall, how satisfied are you with your current job?",
+    "A17: In the past four weeks, how often did you feel depressed or down?",
+    "A36: Overall, do you feel happy with your life?",
+    "A16: In the past four weeks, how often did health problems affect your work or other daily activities?",
+    "A10: What is your current political affiliation?"
+  ),
+  `Response Type` = c(
+    "Continuous",
+    "Ordinal Categorical (3 levels)",
+    "Ordinal Categorical (4 levels)",
+    "Ordinal Categorical (4 levels)",
+    "Ordinal Categorical (5 levels)",
+    "Ordinal Categorical (5 levels)",
+    "Ordinal Categorical (5 levels)",
+    "Ordinal Categorical (5 levels)",
+    "Binary"
+  )
+)
+
+summary_table %>%
+  kable("latex", 
+        booktabs = TRUE, 
+        col.names = c("Variable", "Survey Question", "Response Type"),
+        caption = "Overview of Survey Measures and Variable Coding") %>%
+  kable_styling(latex_options = c("hold_position", "striped")) %>%
+  column_spec(2, width = "6cm") %>%  # Adjust width for "Survey Question"
+  column_spec(3, width = "5cm")   
+```
+\doublespacing
+
+##  Analytical approach
+
+We use SEM to evaluate the relationship between two latent constructs: perceived job insecurity and mental health. The SEM framework allows the integration of multiple observed indicators into latent constructs, reducing measurement error and providing a robust method for understanding complex relationships. The Weighted Least Squares Mean and Variance Adjusted (WLSMV) estimator is used for parameter estimation. WLSMV is particularly suited for handling ordinal categorical data, such as job satisfaction, work-related stress, and happiness in this study. This estimator accounts for the non-normality of categorical variables, provides robust standard errors, and adjusts chi-square values to better evaluate model fit [@distefano_comparison_2014]. These features make WLSMV ideal for our models where the data includes ordinal or categorical responses.
+
+Figure 1 shows the structural equation model for perceived job insecurity and mental health. The path coefficient linking perceived job insecurity and mental health is the key coefficient for H1. If the coefficient is negative and statistically significant, it would indicate that higher perceived job insecurity is associated with poorer mental health.
+
+![structural equation model for perceived job insecurity and mental health](sem_model.jpg)
+
+To explore whether the relationship between perceived job insecurity and mental health is invariant across different groups, we conduct a multiple group analysis (MGA) for party membership. First, we estimate the model separately for CCP members and non-CCP members without imposing any constraints to examine the relationship. Next, we test the invariance of this relationship by constraining the structural coefficient to be equal across different groups. If the constrained models show a significantly worse fit compared to the unconstrained models, it indicates that the relationship between perceived job insecurity and mental health varies across groups.
+
+The distribution of survey weights in the analytical sample is similar to the original distribution, indicating that the sample remains representative of the population. Survey weights are used for descriptive statistics to ensure the representativeness of the sample. For the SEM analysis, CGSS only provides survey weights and SSU information, while the PSU information and strata information are not available. Additionally, there are limited packages in R that can handle the complex survey design with SEM^[For example, `lavaan` is not able to handle clusters with categorical data; the archived `lavaan.survey` package only supports several estimators, which do not include WLSMV.]. Therefore, we will only account for the survey weights in the following analysis. As for missing data, we use listwise deletion under the assumption that the data is missing completely at random (MCAR).
+
+# Results
+
+Table 2 presents the weighted descriptive statistics of the variables used in the analysis. The sample consists of 993 respondents after adopting pairwise deletion for missing data. The average weekly work hours are around 49.92 hours. A small proportion of respondents have an indefinite term work contract, while the majority have a fixed-term contract. Most respondents report that they have main control over their work and are satisfied with their jobs. The majority of respondents report that they rarely or sometimes experience work stress. Regarding mental health, most respondents report that they rarely or sometimes feel depressed and often or always feel happy. The majority of respondents indicate that their health never affects their work or daily life. The sample is almost evenly split by sex, with around 86% of respondents not being members of the Chinese Communist Party.
+
+\singlespacing
+```{r descriptive statistics, results='asis'}
+CGSS2 = CGSS %>% 
+  mutate(workhours = as.numeric(workhours),
+         workcontract = as.factor(workcontract),
+         workself = as.factor(workself),
+         satisfaction = as.factor(satisfaction),
+         workstress = as.factor(workstress),
+         depressed = as.factor(depressed),
+         happy = as.factor(happy),
+         health = as.factor(health),
+         party = as.factor(party)) %>% 
+  mutate(workcontract = recode(workcontract, 
+                          "1" = "Infinite term", 
+                          "2" = "Fixed term", 
+                          "3" = "No contract"),
+         workself = recode(workself, "1" = "Completely controlled by self",
+                            "2" = "Mainly controlled by self",
+                            "3" = "Mainly controlled by others",
+                            "4" = "Completely controlled by others"),
+         satisfaction = recode(satisfaction, "1" = "Very satisfied", 
+                               "2" = "Satisfied", 
+                               "3" = "Neutral", 
+                               "4" = "Dissatisfied", 
+                               "5" = "Very dissatisfied"),
+         workstress = recode(workstress, "1" = "Rarely", 
+                             "2" = "Sometimes", 
+                             "3" = "Often", 
+                             "4" = "Always"),
+         depressed = recode(depressed, "1" = "Always", 
+                            "2" = "Often", 
+                            "3" = "Sometimes", 
+                            "4" = "Rarely", 
+                            "5" = "Never"),
+         happy = recode(happy, "1" = "Never", 
+                        "2" = "Rarely", 
+                        "3" = "Sometimes", 
+                        "4" = "Often", 
+                        "5" = "Always"),
+         health = recode(health, "1" = "Always", 
+                         "2" = "Often", 
+                         "3" = "Sometimes", 
+                         "4" = "Rarely",
+                         "5" = "Never"))
+
+design = svydesign(id = ~1, weights = ~weight, data = CGSS2)
+
+descriptive = design %>% 
+  tbl_svysummary(
+    include = c(workhours, workcontract, workself, satisfaction, 
+                workstress, depressed, happy, health, party),
+    digits = list(all_continuous() ~ 2, all_categorical() ~ 1),
+    statistic = list(all_continuous() ~ "{mean} ({sd})",
+                     all_categorical() ~ "{p}%"),
+    type = list(workhours ~ "continuous",
+                c(workcontract, workself, satisfaction, workstress, depressed, happy, health, party) ~ "categorical"),
+    label = list(
+      workhours = "Weekly work hours",
+      workcontract = "Type of work contract",
+      workself = "Work autonomy",
+      satisfaction = "Job satisfaction",
+      workstress = "Work stress",
+      depressed = "Feel depressed",
+      happy = "Feel happy",
+      health = "Health affects work/daily life",
+      party = "Party membership"
+  ) 
+) %>% 
+  modify_header(
+    label ~ "**Variable**",
+    all_stat_cols() ~ "Mean (SD) / Percent") %>% 
+  modify_footnote(everything() ~ NA) %>% 
+  modify_caption("Weighted descriptive statistics (N = 993)") %>%
+  bold_labels()
+
+as_kable_extra(descriptive, format = "latex", booktabs = TRUE, longtable = TRUE)
+```
+\doublespacing
+
+Table 3 presents the results of the SEM examining the relationship between perceived job insecurity and mental health with the WLSMV estimation. The model exhibits a Comparative Fit Index (CFI) of 0.94 and a Root Mean Square Error of Approximation (RMSEA) of 0.07, both of which are considered acceptable. For the measurement models, all factor loadings for the latent variable mental health are significant at the 0.01 level, while three out of four factor loadings are significant for the latent variable perceived job insecurity at the 0.1 level. The analysis reveals that perceived job insecurity negatively affects mental health, with a coefficient of -0.11 at the 0.01 significance level. We also use modification indices to identify potential areas for model improvement. There are 6 modification indices greater than 10, but none of them are theoretically meaningful. Additionally, the estimation with survey weights gives similar results to the unweighted estimation. Therefore, we conclude that the model is robust and the result is reliable. The findings support H1, indicating that perceived job insecurity is negatively associated with mental health.
+
+\singlespacing
+```{r H1 result, results='asis'}
+semTable(
+  object = c(" " = fit1),
+  type = "latex",
+  longtable = TRUE,
+  paramSets = c("loadings", "slopes", "fits"),
+  caption = "Structural equation model results for the
+         relationship between perceived job insecurity and mental
+         health",
+  varLabels = c(
+    "insecurity" = "Perceived job insecurity",
+    "mental" = "Mental health",
+    "workhours" = "Weekly work hours",
+    "workcontract" = "Type of work contract",
+    "workself" = "Work autonomy",
+    "satisfaction" = "Job satisfaction",
+    "workstress" = "Work stress",
+    "depressed" = "Feel depressed",
+    "happy" = "Feel happy",
+    "health" = "Health affects work/daily life"
+  ),
+  fits = c("chisq", "cfi", "tli", "rmsea")
+)
+```
+\doublespacing
+
+The relationship between perceived job insecurity and mental health is further analyzed among CCP and non-CCP members. Table 4 provides the results of the SEM for the two groups without any constraints. The model reports a CFI of 0.93 and an RMSEA of 0.07, signifying a good fit. The analysis shows that perceived job insecurity has a significantly negative effect on mental health for both CCP and non-CCP residents. However, the negative impact is stronger for non-CCP members with a coefficient of -0.12, compared to CCP members with a coefficient of -0.05. To determine whether this relationship is invariant between CCP and non-CCP members, a constrained model equalizing the structural coefficient is estimated. The constrained model, which maintains the same CFI of 0.93 and RMSEA of 0.07 as the unconstrained model, has the structural coefficient of -0.09. However, the scaled chi-squared difference test indicates that the constrained model is significantly worse than the unconstrained model, with a p-value less than 0.01, suggesting that the relationship is not invariant between CCP members and non-CCP members. The MGA analysis with survey weights yields similar results to the unweighted estimation, indicating the robustness of the results. Therefore, H2 is supported, indicating that the negative relationship between perceived job insecurity and mental health differs between CCP members and non-CCP members.
+
+\singlespacing
+```{r H3 results unconstrained, results='asis'}
+semTable(
+  object = c(" " = fit3_party),
+  type = "latex",
+  longtable = TRUE,
+  paramSets = c("loadings", "slopes", "fits"),
+  caption = "Perceived job insecurity and mental
+         health of CCP Members Vs. Non-Members without constraints",
+  columns = c("eststars", "se"),
+  alpha = c(0.1, 0.05, 0.01),
+  varLabels = c(
+    "insecurity" = "Perceived job insecurity",
+    "mental" = "Mental health",
+    "workhours" = "Weekly work hours",
+    "workcontract" = "Type of work contract",
+    "workself" = "Work autonomy",
+    "satisfaction" = "Job satisfaction",
+    "workstress" = "Work stress",
+    "depressed" = "Feel depressed",
+    "happy" = "Feel happy",
+    "health" = "Health affects work/daily life"
+  )
+)
+```
+\doublespacing
+
+# Discussion
+
+This study examines the impact of perceived job insecurity on mental health and how this relationship varies between CCP and non-CCP members, motivated by the psychological distress employees experience in response to job uncertainty and the role of political capital in this context within China. Utilizing an SEM approach, the analysis found that perceived job insecurity is negatively associated with mental health, with a significant difference in its impact between CCP and non-CCP members. Specifically, non-CCP members experienced a greater negative effect of job insecurity on mental health compared to CCP members. This difference may be attributed to the income, wealth, and career mobility advantages of CCP members. Future research could explore additional factors other than CCP membership, such as family background, individual abilities, and social networks, influencing the relationship between job insecurity and mental health. These considerations could provide a deeper understanding of the the job insecurity impact disparities on well-being across CCP and non-CCP members in China.
+
+# References
+
+<div id="refs"></div>
+
+# Appendix
+
+See more infomation on GitHub: https://github.com/petertbz/SurvMeth687Project
