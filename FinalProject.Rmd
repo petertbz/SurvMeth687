@@ -1,5 +1,5 @@
 ---
-title: "Does Perceived Job Insecurity Affect Mental Health? Evidence from the 2021 Chinese General Social Survey"
+title: "Political Capital and Job Insecurity: Examining Mental Health Disparities Between Party and Non-Party Members in China"
 author: "Team Kish"
 header-includes:
     - \usepackage{setspace}
@@ -45,7 +45,9 @@ load("FinalResults.RData")
 
 With rising global competition, industrial shifts, and economic recessions, an increasing number of employees face concerns about layoffs. The instability and unpredictability of labor markets impose significant psychological burdens on workers, often resulting in adverse health outcomes linked to job insecurity. Understanding the relationship between job insecurity and health is crucial for informing interventions aimed at improving workers' well-being. Previous research has established a connection between perceived job insecurity and poor health outcomes. After accounting for demographic, socioeconomic, and job characteristics, as well as prior health conditions, perceived job insecurity was found associated with deteriorating health among U.S. workers [@burgard_perceived_2009]. Similarly, McDonough [-@mcdonough_job_2000], using a national sample of Canadian adults, reported that high levels of job insecurity lead to lower self-rated health, increased psychological distress, and increased use of medication for symptom relief.
 
-This study examines the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative dataset in China. Perceived job insecurity arises from subjective experiences and cannot be effectively captured by a single survey item. To address this, we use responses from multiple survey items to construct a latent variable for job insecurity, capturing its complex dynamics, as well as a latent variable for mental health. Utilizing structural equation modeling (SEM), we analyze the relationship between the latent perceived job insecurity and the latent mental well-being.
+This study examines the impact of perceived job insecurity on self-rated mental health using data from the 2021 Chinese General Social Survey (CGSS), a nationally representative dataset in China. Within China’s unique cultural and political context, membership in the Chinese Communist Party (CCP) provides individuals with political capital, enhancing opportunities for upward mobility in political and managerial positions for occupations [@bian2001communist]. CCP membership is also associated with income premiums [@xie1996regional, @dickson2000membership, @liu2003economic], higher wealth accumulation [@jin2017social], and increased life satisfaction in urban areas [@appleton2008life]. In the aftermath of COVID-19, Khudaykulov et al. found that job insecurity leads to higher depression and anxiety. Building on these findings, we hypothesize that the relationship between job insecurity and mental health may differ between CCP members and non-CCP members due to disparities in job security and well-being stemming from income and wealth inequalities tied to political capital.
+
+This study makes the first attempt to conceptualize perceived job insecurity as a latent variable constructed from multiple survey items with a structural equation model (SEM) approach, enabling an analysis assessing its impact on mental health across CCP and non-CCP members. Perceived job insecurity arises from subjective experiences and cannot be effectively captured by a single survey item. To address this, we use responses from multiple survey items to construct a latent variable for job insecurity, capturing its complex dynamics and estimation uncertainty, as well as a latent variable for mental health. Utilizing an SEM, we analyze the relationship between the latent perceived job insecurity and the latent mental well-being.
 
 Within the context of China, we have following hypotheses:
 
@@ -118,7 +120,7 @@ summary_table %>%
 
 ##  Analytical approach
 
-We use the structural equation model (SEM) to evaluate the relationship between two latent constructs: perceived job insecurity and mental health. The SEM framework allows the integration of multiple observed indicators into latent constructs, reducing measurement error and providing a robust method for understanding complex relationships.
+We use SEM to evaluate the relationship between two latent constructs: perceived job insecurity and mental health. The SEM framework allows the integration of multiple observed indicators into latent constructs, reducing measurement error and providing a robust method for understanding complex relationships.
 
 The Weighted Least Squares Mean and Variance Adjusted (WLSMV) estimator is used for parameter estimation. WLSMV is particularly suited for handling ordinal categorical data, such as job satisfaction, work-related stress, and happiness in this study. This estimator accounts for the non-normality of categorical variables, provides robust standard errors, and adjusts chi-square values to better evaluate model fit. These features make WLSMV ideal for our models where the data includes ordinal or categorical responses.
 
@@ -272,6 +274,9 @@ semTable(
 \doublespacing
 
 # Discussion
+
+This study examines the impact of perceived job insecurity on mental health and how this relationship varies between CCP and non-CCP members, motivated by the psychological distress employees experience in response to job uncertainty and the role of political capital in this context within China. Utilizing an SEM approach, the analysis found that perceived job insecurity is negatively associated with mental health, with a significant difference in its impact between CCP and non-CCP members. Specifically, non-CCP members experienced a greater negative effect of job insecurity on mental health compared to CCP members. This difference may be attributed to the income, wealth, and career mobility advantages of CCP members. Future research could explore additional factors other than CCP membership, such as family background, individual abilities, and social networks, influencing the relationship between job insecurity and mental health. These considerations could provide a deeper understanding of the the job insecurity impact disparities on well-being across CCP and non-CCP members in China.
+
 
 # References
 
