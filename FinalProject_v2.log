@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.12.3)  8 DEC 2024 17:23
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.12.3)  8 DEC 2024 20:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2394,15 +2394,15 @@ Package siunitx Info: Option "table-space-text-post" has been deprecated in
 (siunitx)             Use "table-format" as a replacement.
 
 [9]
-LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/m/it' will be
-(Font)              scaled to size 12.0pt on input line 577.
-
 
 [10]
+LaTeX Font Info:    Font shape `TU/TimesNewRoman(0)/m/it' will be
+(Font)              scaled to size 12.0pt on input line 580.
+
 
 [11]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 640.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 643.
 Missing character: There is no ？ (U+FF1F) in font [lmmono10-italic]:!
 Missing character: There is no ： (U+FF1A) in font [lmmono10-italic]:!
 Missing character: There is no ； (U+FF1B) in font [lmmono10-italic]:!
@@ -2410,91 +2410,87 @@ Missing character: There is no ； (U+FF1B) in font [lmmono10-italic]:!
 Missing character: There is no ； (U+FF1B) in font [lmmono10-italic]:!
 
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 758.
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 761.
 
 Missing character: There is no ， (U+FF0C) in font [lmmono10-italic]:!
 
-Underfull \vbox (badness 1603) detected at line 1034
- []
-
-
 
 [12]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
 
 [13]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
 
 [14]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
 
 [15]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
 
 [16]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
 
 [17]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
 
 [18]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
 
 [19]
-Underfull \vbox (badness 10000) detected at line 1034
+Underfull \vbox (badness 10000) detected at line 1037
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1034
+Overfull \vbox (2.30598pt too high) detected at line 1037
  []
 
 
@@ -2510,7 +2506,7 @@ L3 programming layer <2024-11-02>
 Here is how much of TeX's memory you used:
  21979 strings out of 475964
  436612 string characters out of 5777162
- 1008926 words of memory out of 5000000
+ 1007965 words of memory out of 5000000
  44481 multiletter control sequences out of 15000+600000
  565731 words of font info for 114 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
